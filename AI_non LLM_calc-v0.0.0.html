@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Metrics Calculator</title>
+  <script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=QCtyiGsbgu60zLrI5TAlss5lgmsvrl_BDSMPYw1fnJIojXgNdWrSCnWdG3-St5KiKa5aHJVhtPt8pzM6dpWnJg3mRDC1XVYEwjd7xfymBoxrDfUo9ducz9t4LLu4TrG8zrkrBONcJnkrmnNBDZ30X35DnWb98TMrBIhor3jhzlP0-MXYT-5hOKn18InC3G1S5rk162m1WF_vaWTjo-PBw6hTO0mHjsUlVy0NzoqDdmzGKGzNR4UcGmHauHhFmoQfSarLQAJlon0NDU8p713NlZJQsxp6eYgtGhSX8UwaEUflRhEYh6kN6T9jYlI-n8nfuJKaejTo-3J5CHj5yI6cDhgrxWCkoMYk4Wx1dJveua5KgCBdJYNn0zny0LS2u3Q2c-Gd8xnDXMcVvZSA34VOYUFE3Q_6qg1u77e3BeuLHwYKvIW3TNk8ksy7oyXj9a1DAR3n-mkhGBaVGgO7ldj82mJQmdtIHLJFnbVTXTrk4iT3zRDqrfdkD2IL6xasve0dZpvrdG7VwdjXgbo8LykP_fS9pG8a88pZSPQEG4oE9us6s9WGa-L2j8OlGso5btTCetKyCvWUbWinCzbwgvlHs7W-2FeZUGAJOoiZpQw0YttS909g7ZABzk4F8DJbZSCcT9KPcjOQnAc3MIMCvjtCLg" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly93ZWJhdHRhY2gubWFpbC55YW5kZXgubmV0L21lc3NhZ2VfcGFydF9yZWFsL2luZGV4Lmh0bWw_bmFtZT1pbmRleC5odG1sJnNpZD1ZV1Z6WDNOcFpEcDdJbUZsYzB0bGVVbGtJam9pTVRjNElpd2lhRzFoWTB0bGVVbGtJam9pTVRjNElpd2lhWFpDWVhObE5qUWlPaUkxZDBOd1VXeEZRbVZGV2s5NlRrUXZWM2MzYUVaUlBUMGlMQ0p6YVdSQ1lYTmxOalFpT2lKTk5sWlVRVzFHTVd0alYzSlFPSHBIVm1vNGNIUnlkbmxDTUVsNlFVOU9PVUZKTjFwNlRraGlhSE5NVTJwUWJqUlNObUZGVUhCbFkwMDJTMmRYYlVaWlFqUmFUSGhxUVc0NUsySkVXR2hXU2pSa1IwZFlRMUZUVFcwNVVHbHhhSHBQUkZwSVpYaEZhM0J5Wm5wdFVqTTFiVTlqT1ZkU0wxaGFVemQ0TmpCUFN5SXNJbWh0WVdOQ1lYTmxOalFpT2lKWlNVYzJSR05GU1RKVE4wMWphSGxvWWs1U1ltZFdZbVZvT0V4bVlqVlVWWFJWV1ZoTVJHdERjblJaUFNKOQ"/><style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-soft: #f8fbff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --accent: #4f46e5;
+      --accent-strong: #4338ca;
+      --accent-soft: #eef2ff;
+      --good: #4338ca;
+      --good-bg: #f8fbff;
+      --warn: #4338ca;
+      --warn-bg: #f8fbff;
+      --danger: #dc2626;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius: 12px;
+    }
+
+    body.dark-theme {
+      --bg: #0f172a;
+      --surface: #111827;
+      --surface-soft: #0b1220;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --border: #334155;
+      --accent: #818cf8;
+      --accent-strong: #a5b4fc;
+      --accent-soft: #1e293b;
+      --good: #a5b4fc;
+      --good-bg: #0b1220;
+      --warn: #a5b4fc;
+      --warn-bg: #0b1220;
+      --danger: #f87171;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.24);
+      --shadow-md: 0 18px 40px rgba(0, 0, 0, 0.36);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #f1f5ff 0%, var(--bg) 36%);
+      color: var(--text);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .container {
+      width: min(100% - 32px, 900px);
+      margin: 32px auto 48px;
+      display: grid;
+      gap: 24px;
+    }
+
+    .header {
+      text-align: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: calc(var(--radius) + 4px);
+      box-shadow: var(--shadow-md);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::after {
+      content: "";
+      position: absolute;
+      inset: auto -64px -64px auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(79, 70, 229, 0.16) 0%, rgba(79, 70, 229, 0) 70%);
+      pointer-events: none;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface-soft);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-1px);
+      background: var(--accent-soft);
+    }
+
+    .theme-toggle-icon {
+      width: 18px;
+      height: 18px;
+      position: absolute;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .icon-moon {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .icon-sun {
+      opacity: 0;
+      transform: scale(0.8) rotate(-20deg);
+    }
+
+    body.dark-theme .icon-moon {
+      opacity: 0;
+      transform: scale(0.8) rotate(20deg);
+    }
+
+    body.dark-theme .icon-sun {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+
+    .layout {
+      display: grid;
+      gap: 24px;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 20px;
+    }
+
+    .panel h2 {
+      margin: 0 0 4px;
+      font-size: 1.125rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .panel-subtitle {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      margin: 0;
+      color: var(--text);
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hint {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      border: 1px solid #c7d2fe;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: help;
+      user-select: none;
+    }
+
+    .number-wrap {
+      position: relative;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+      padding: 10px 12px;
+      font-size: 0.95rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
+    input[type="number"] {
+      appearance: textfield;
+      -webkit-appearance: textfield;
+      padding-right: 40px;
+    }
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input::placeholder {
+      color: #94a3b8;
+    }
+
+    input:focus {
+      border-color: #818cf8;
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+      background: var(--surface);
+    }
+
+    .spin-controls {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.16s ease;
+    }
+
+    .number-wrap:hover .spin-controls,
+    .number-wrap:focus-within .spin-controls {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .spin-btn {
+      width: 18px;
+      height: 13px;
+      padding: 0;
+      border: 0;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--accent);
+      box-shadow: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .spin-btn:hover {
+      background: color-mix(in srgb, var(--accent) 16%, transparent);
+    }
+
+    .spin-btn:active {
+      transform: translateY(0);
+    }
+
+    .spin-btn svg {
+      width: 10px;
+      height: 10px;
+      display: block;
+      fill: currentColor;
+    }
+
+    .error {
+      min-height: 20px;
+      margin-top: 12px;
+      color: var(--danger);
+      font-size: 0.84rem;
+    }
+
+    .actions {
+      margin-top: 4px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      line-height: 1;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    #calculateBtn,
+    #showResultsTableBtn {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+      color: #ffffff;
+      box-shadow: 0 8px 16px rgba(79, 70, 229, 0.24);
+    }
+
+    #calculateBtn:hover,
+    #showResultsTableBtn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 20px rgba(79, 70, 229, 0.3);
+    }
+
+    #clearBtn,
+    #clearHistoryBtn {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    #clearBtn:hover,
+    #clearHistoryBtn:hover {
+      background: var(--accent-soft);
+      border-color: #c7d2fe;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .metric-card {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .metric-card.positive {
+      background: linear-gradient(180deg, var(--good-bg) 0%, var(--surface) 48%);
+    }
+
+    .metric-card.warning {
+      background: linear-gradient(180deg, var(--warn-bg) 0%, var(--surface) 48%);
+    }
+
+    .metric-title {
+      margin: 0 0 6px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .metric-tip {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+
+    .formula {
+      margin: 0 0 12px;
+      font-size: 0.76rem;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      letter-spacing: 0.02em;
+      padding: 7px 8px;
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      background: var(--surface-soft);
+      white-space: nowrap;
+      overflow-x: auto;
+    }
+
+    .value {
+      margin: 0 0 6px;
+      font-size: clamp(1.6rem, 3.4vw, 2rem);
+      font-weight: 800;
+      color: var(--accent-strong);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+      line-height: 1.15;
+      transition: color 0.25s ease;
+      animation: appear 0.35s ease;
+    }
+
+    .metric-card.positive .value {
+      color: var(--good);
+    }
+
+    .metric-card.warning .value {
+      color: var(--warn);
+    }
+
+    .subvalue {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+      word-break: break-word;
+    }
+
+    .history-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .history-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .history-empty {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .history-item {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+      padding: 12px;
+    }
+
+    .history-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .history-date {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+    }
+
+    .history-metrics {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+
+    .history-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .history-cell {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      padding: 8px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .history-cell strong {
+      display: block;
+      margin-top: 2px;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .stat-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+      padding: 10px;
+    }
+
+    .stat-label {
+      margin: 0 0 4px;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .stat-value {
+      margin: 0;
+      color: var(--text);
+      font-size: 1.05rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+    }
+
+    .stat-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .quick-mrr-panel {
+      border: 1px solid #c7d2fe;
+      background: linear-gradient(180deg, var(--accent-soft) 0%, var(--surface) 72%);
+    }
+
+    .quick-mrr-results {
+      margin-top: 12px;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .quick-mrr-line {
+      margin: 0;
+      font-size: 0.86rem;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+      word-break: break-word;
+    }
+
+    .quick-mrr-line strong {
+      color: var(--text);
+      margin-right: 6px;
+    }
+
+    .chart-wrap {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px;
+      background: var(--surface-soft);
+    }
+
+    #mrrChart {
+      width: 100%;
+      height: 220px;
+      display: block;
+    }
+
+    .history-filters {
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      margin-top: 10px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: var(--surface);
+    }
+
+    .legend-color {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      display: inline-block;
+      border: 1px solid rgba(15, 23, 42, 0.16);
+    }
+
+    .delete-entry-btn {
+      background: #ef4444;
+      color: #ffffff;
+      padding: 7px 10px;
+      font-size: 0.79rem;
+      border-radius: 8px;
+    }
+
+    .bottom-actions {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 8px;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0.6;
+        transform: translateY(3px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 860px) {
+      .container {
+        width: min(100% - 24px, 900px);
+        margin-top: 20px;
+      }
+
+      .input-grid,
+      .metrics-grid,
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .history-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .history-filters {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .container {
+        margin-bottom: 32px;
+      }
+
+      .header,
+      .panel {
+        padding: 16px;
+      }
+
+      .theme-toggle {
+        top: 10px;
+        right: 10px;
+      }
+
+      .actions,
+      .bottom-actions {
+        flex-direction: column;
+      }
+
+      .actions button,
+      .bottom-actions button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="header">
+      <h1>AI Metrics Calculator</h1>
+      <p class="subtitle">Professional quality metrics dashboard for search evaluation</p>
+      <button id="themeToggleBtn" class="theme-toggle" type="button" aria-label="Переключить тему" title="Переключить тему">
+        <svg class="theme-toggle-icon icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20 14.5A8.5 8.5 0 1 1 11.5 6a6.5 6.5 0 0 0 8.5 8.5z"></path>
+        </svg>
+        <svg class="theme-toggle-icon icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"></path>
+        </svg>
+      </button>
+    </section>
+
+    <section class="layout">
+      <article class="panel">
+        <h2>Input Panel</h2>
+        <p class="panel-subtitle">Введите значения для расчета основных метрик качества поиска.</p>
+        <div class="input-grid">
+          <div class="field">
+            <label for="tp">TP
+              <span class="hint" title="True Positives: relevant results correctly retrieved">i</span>
+            </label>
+            <div class="number-wrap">
+              <input id="tp" type="number" min="0" step="1" value="0" placeholder="e.g. 24" />
+              <div class="spin-controls" aria-hidden="true">
+                <button class="spin-btn spin-up" type="button" data-target="tp" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 2 1.8 6h6.4L5 2z"></path></svg></button>
+                <button class="spin-btn spin-down" type="button" data-target="tp" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 8 1.8 4h6.4L5 8z"></path></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="fp">FP
+              <span class="hint" title="False Positives: non-relevant results retrieved">i</span>
+            </label>
+            <div class="number-wrap">
+              <input id="fp" type="number" min="0" step="1" value="0" placeholder="e.g. 8" />
+              <div class="spin-controls" aria-hidden="true">
+                <button class="spin-btn spin-up" type="button" data-target="fp" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 2 1.8 6h6.4L5 2z"></path></svg></button>
+                <button class="spin-btn spin-down" type="button" data-target="fp" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 8 1.8 4h6.4L5 8z"></path></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="fn">FN
+              <span class="hint" title="False Negatives: relevant results missed by retrieval">i</span>
+            </label>
+            <div class="number-wrap">
+              <input id="fn" type="number" min="0" step="1" value="0" placeholder="e.g. 6" />
+              <div class="spin-controls" aria-hidden="true">
+                <button class="spin-btn spin-up" type="button" data-target="fn" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 2 1.8 6h6.4L5 2z"></path></svg></button>
+                <button class="spin-btn spin-down" type="button" data-target="fn" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 8 1.8 4h6.4L5 8z"></path></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="tn">TN
+              <span class="hint" title="True Negatives: non-relevant results correctly not retrieved">i</span>
+            </label>
+            <div class="number-wrap">
+              <input id="tn" type="number" min="0" step="1" value="0" placeholder="e.g. 40" />
+              <div class="spin-controls" aria-hidden="true">
+                <button class="spin-btn spin-up" type="button" data-target="tn" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 2 1.8 6h6.4L5 2z"></path></svg></button>
+                <button class="spin-btn spin-down" type="button" data-target="tn" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 8 1.8 4h6.4L5 8z"></path></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="k">K
+              <span class="hint" title="Cutoff level for @K metrics (display-only context)">i</span>
+            </label>
+            <div class="number-wrap">
+              <input id="k" type="number" min="0" step="1" value="10" placeholder="e.g. 10" />
+              <div class="spin-controls" aria-hidden="true">
+                <button class="spin-btn spin-up" type="button" data-target="k" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 2 1.8 6h6.4L5 2z"></path></svg></button>
+                <button class="spin-btn spin-down" type="button" data-target="k" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 8 1.8 4h6.4L5 8z"></path></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="rank">First relevant rank
+              <span class="hint" title="Position of first relevant result for one query (0 if none)">i</span>
+            </label>
+            <div class="number-wrap">
+              <input id="rank" type="number" min="0" step="1" value="0" placeholder="e.g. 3" />
+              <div class="spin-controls" aria-hidden="true">
+                <button class="spin-btn spin-up" type="button" data-target="rank" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 2 1.8 6h6.4L5 2z"></path></svg></button>
+                <button class="spin-btn spin-down" type="button" data-target="rank" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 8 1.8 4h6.4L5 8z"></path></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="model">Model
+              <span class="hint" title="Optional model name for run context">i</span>
+            </label>
+            <input id="model" type="text" placeholder="e.g. gpt-4o" />
+          </div>
+
+          <div class="field">
+            <label for="promptName">Prompt name
+              <span class="hint" title="Optional prompt identifier">i</span>
+            </label>
+            <input id="promptName" type="text" placeholder="e.g. Turing facts v1" />
+          </div>
+        </div>
+        <div id="error" class="error"></div>
+        <div class="actions">
+          <button id="calculateBtn" type="button">Рассчитать</button>
+          <button id="clearBtn" type="button">Очистить</button>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Metrics Dashboard</h2>
+        <p class="panel-subtitle">Актуальные показатели вычисляются на основе текущих входных данных.</p>
+        <div class="metrics-grid">
+          <div class="metric-card positive">
+            <p class="metric-title">Precision@K</p>
+            <p class="metric-tip">Доля <strong>действительно релевантных</strong> элементов среди всех найденных (чистота выдачи).</p>
+            <div class="formula">Precision = TP / (TP + FP)</div>
+            <div id="precisionValue" class="value">0.00</div>
+            <div id="precisionMeta" class="subvalue">K = 10</div>
+          </div>
+
+          <div class="metric-card positive">
+            <p class="metric-title">Recall@K</p>
+            <p class="metric-tip">Доля найденных релевантных элементов среди <strong>всех существующих</strong> (полнота охвата).</p>
+            <div class="formula">Recall = TP / (TP + FN)</div>
+            <div id="recallValue" class="value">0.00</div>
+            <div id="recallMeta" class="subvalue">K = 10</div>
+          </div>
+
+          <div class="metric-card positive">
+            <p class="metric-title">F1 Score</p>
+            <p class="metric-tip">Гармоническое среднее между Precision и Recall, отражающее <strong>баланс</strong> качества.</p>
+            <div class="formula">F1 = 2 * (P * R) / (P + R)</div>
+            <div id="f1Value" class="value">0.00</div>
+            <div id="f1Meta" class="subvalue">P = 0.00, R = 0.00</div>
+          </div>
+
+          <div class="metric-card positive">
+            <p class="metric-title">Accuracy</p>
+            <p class="metric-tip">Доля корректных решений среди всех случаев.</p>
+            <div class="formula">Accuracy = (TP + TN) / (TP + TN + FP + FN)</div>
+            <div id="accuracyValue" class="value">0.00</div>
+            <div id="accuracyMeta" class="subvalue">TP = 0, TN = 0, FP = 0, FN = 0</div>
+          </div>
+
+          <div class="metric-card positive">
+            <p class="metric-title">Reciprocal Rank (RR)</p>
+            <p class="metric-tip">Обратная величина ранга <strong>первого найденного</strong> релевантного элемента (скорость успеха для одного запроса).</p>
+            <div class="formula">RR = 1 / rank</div>
+            <div id="rrValue" class="value">0.00</div>
+            <div id="rrMeta" class="subvalue">rank = 0</div>
+          </div>
+
+          <div class="metric-card positive" style="grid-column: 1 / -1;">
+            <p class="metric-title">Mean Reciprocal Rank (MRR)</p>
+            <p class="metric-tip">Среднее значение RR по всем тестовым запросам, оценивающее <strong>общую скорость ранжирования</strong>.</p>
+            <div class="formula">MRR = (1 / N) * Σ (1 / rank_i), rank_i = 0 → RR_i = 0</div>
+            <div id="mrrValue" class="value">0.00</div>
+            <div id="mrrMeta" class="subvalue">По всем run: 0.00</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="history-header">
+          <h2>История расчетов</h2>
+          <button id="clearHistoryBtn" class="secondary" type="button">Очистить историю</button>
+        </div>
+        <div class="history-filters">
+          <input id="historySearchInput" type="text" placeholder="Поиск по model / prompt / дате" />
+          <input id="historyModelFilterInput" type="text" placeholder="Фильтр по model" />
+        </div>
+        <div id="historyList" class="history-list">
+          <p class="history-empty">История пока пуста.</p>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Статистика</h2>
+        <p class="panel-subtitle">Агрегированные показатели по сохраненным запускам.</p>
+        <div id="statsGrid" class="stats-grid">
+          <div class="stat-card">
+            <p class="stat-label">Средний Precision</p>
+            <p id="avgPrecisionValue" class="stat-value">0.00</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">Средний Recall</p>
+            <p id="avgRecallValue" class="stat-value">0.00</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">MRR (все run)</p>
+            <p id="avgMrrValue" class="stat-value">0.00</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">MRR (отфильтрованные run)</p>
+            <p id="filteredMrrValue" class="stat-value">0.00</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">Лучший run (по RR)</p>
+            <p id="bestRunValue" class="stat-note">-</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">Худший run (по RR)</p>
+            <p id="worstRunValue" class="stat-note">-</p>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="mrrChart" width="800" height="220"></canvas>
+          <div id="chartLegend" class="chart-legend"></div>
+        </div>
+      </article>
+
+      <article class="panel quick-mrr-panel">
+        <h2>Quick MRR Calculator</h2>
+        <p class="panel-subtitle">Sandbox-инструмент для быстрого расчета MRR по списку рангов.</p>
+        <div class="field">
+          <label for="quickMrrRanks">Ranks (через запятую)</label>
+          <input id="quickMrrRanks" type="text" placeholder="пример: 1,4,3,0" />
+        </div>
+        <div class="quick-mrr-results">
+          <p id="quickMrrRrList" class="quick-mrr-line"><strong>RR list:</strong> -</p>
+          <p id="quickMrrValue" class="quick-mrr-line"><strong>MRR:</strong> -</p>
+        </div>
+      </article>
+    </section>
+    <div class="bottom-actions">
+      <button id="showResultsTableBtn" type="button">Таблица результатов</button>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var tpInput = document.getElementById("tp");
+      var fpInput = document.getElementById("fp");
+      var fnInput = document.getElementById("fn");
+      var tnInput = document.getElementById("tn");
+      var kInput = document.getElementById("k");
+      var rankInput = document.getElementById("rank");
+      var modelInput = document.getElementById("model");
+      var promptNameInput = document.getElementById("promptName");
+      var calculateBtn = document.getElementById("calculateBtn");
+      var clearBtn = document.getElementById("clearBtn");
+      var showResultsTableBtn = document.getElementById("showResultsTableBtn");
+      var themeToggleBtn = document.getElementById("themeToggleBtn");
+      var clearHistoryBtn = document.getElementById("clearHistoryBtn");
+      var historyList = document.getElementById("historyList");
+      var historySearchInput = document.getElementById("historySearchInput");
+      var historyModelFilterInput = document.getElementById("historyModelFilterInput");
+      var avgPrecisionValue = document.getElementById("avgPrecisionValue");
+      var avgRecallValue = document.getElementById("avgRecallValue");
+      var avgMrrValue = document.getElementById("avgMrrValue");
+      var filteredMrrValue = document.getElementById("filteredMrrValue");
+      var bestRunValue = document.getElementById("bestRunValue");
+      var worstRunValue = document.getElementById("worstRunValue");
+      var mrrChart = document.getElementById("mrrChart");
+      var chartLegend = document.getElementById("chartLegend");
+      var errorEl = document.getElementById("error");
+      var quickMrrRanksInput = document.getElementById("quickMrrRanks");
+      var quickMrrRrList = document.getElementById("quickMrrRrList");
+      var quickMrrValue = document.getElementById("quickMrrValue");
+      var RUNS_KEY = "metrics_runs";
+      var RUNS_LIMIT = 30;
+      var THEME_KEY = "metrics_theme";
+
+      var precisionValue = document.getElementById("precisionValue");
+      var recallValue = document.getElementById("recallValue");
+      var f1Value = document.getElementById("f1Value");
+      var accuracyValue = document.getElementById("accuracyValue");
+      var rrValue = document.getElementById("rrValue");
+      var mrrValue = document.getElementById("mrrValue");
+
+      var precisionMeta = document.getElementById("precisionMeta");
+      var recallMeta = document.getElementById("recallMeta");
+      var f1Meta = document.getElementById("f1Meta");
+      var accuracyMeta = document.getElementById("accuracyMeta");
+      var rrMeta = document.getElementById("rrMeta");
+      var mrrMeta = document.getElementById("mrrMeta");
+
+      function toNonNegativeInt(inputEl) {
+        var value = Number(inputEl.value);
+        if (!Number.isFinite(value) || value < 0) {
+          return 0;
+        }
+        return Math.floor(value);
+      }
+
+      function round2(num) {
+        return Number(num).toFixed(2);
+      }
+
+      function formatDate(date) {
+        var y = date.getFullYear();
+        var m = String(date.getMonth() + 1).padStart(2, "0");
+        var d = String(date.getDate()).padStart(2, "0");
+        var h = String(date.getHours()).padStart(2, "0");
+        var mm = String(date.getMinutes()).padStart(2, "0");
+        return y + "-" + m + "-" + d + " " + h + ":" + mm;
+      }
+
+      function safeDivide(numerator, denominator) {
+        if (denominator === 0) return 0;
+        return numerator / denominator;
+      }
+
+      function validateAndNormalizeInputs() {
+        var tp = toNonNegativeInt(tpInput);
+        var fp = toNonNegativeInt(fpInput);
+        var fn = toNonNegativeInt(fnInput);
+        var tn = toNonNegativeInt(tnInput);
+        var k = toNonNegativeInt(kInput);
+        var rank = toNonNegativeInt(rankInput);
+
+        tpInput.value = String(tp);
+        fpInput.value = String(fp);
+        fnInput.value = String(fn);
+        tnInput.value = String(tn);
+        kInput.value = String(k);
+        rankInput.value = String(rank);
+        errorEl.textContent = "";
+
+        return { tp: tp, fp: fp, fn: fn, tn: tn, k: k, rank: rank };
+      }
+
+      function calculate() {
+        var data = validateAndNormalizeInputs();
+
+        var precision = safeDivide(data.tp, data.tp + data.fp);
+        var recall = safeDivide(data.tp, data.tp + data.fn);
+        var f1 = safeDivide(2 * precision * recall, precision + recall);
+        var accuracy = safeDivide(data.tp + data.tn, data.tp + data.tn + data.fp + data.fn);
+        var rr = data.rank > 0 ? 1 / data.rank : 0;
+        var allRuns = readRuns();
+        var filteredRuns = filterRuns(allRuns);
+        var allMrr = computeMrrFromRuns(allRuns);
+        var filteredMrr = computeMrrFromRuns(filteredRuns);
+
+        precisionValue.textContent = round2(precision);
+        recallValue.textContent = round2(recall);
+        f1Value.textContent = round2(f1);
+        accuracyValue.textContent = round2(accuracy);
+        rrValue.textContent = round2(rr);
+        mrrValue.textContent = round2(allMrr);
+
+        precisionMeta.textContent = "K = " + data.k;
+        recallMeta.textContent = "K = " + data.k;
+        f1Meta.textContent = "P = " + round2(precision) + ", R = " + round2(recall);
+        accuracyMeta.textContent = "TP = " + data.tp + ", TN = " + data.tn + ", FP = " + data.fp + ", FN = " + data.fn;
+        rrMeta.textContent = "rank = " + data.rank;
+        mrrMeta.textContent = "По всем run: " + round2(allMrr) + " | По фильтру: " + round2(filteredMrr);
+
+        window.metricsData = {
+          input: {
+            tp: data.tp,
+            fp: data.fp,
+            fn: data.fn,
+            tn: data.tn,
+            rank: data.rank
+          },
+          metrics: {
+            precision: precision,
+            recall: recall,
+            f1: f1,
+            accuracy: accuracy,
+            rr: rr
+          }
+        };
+      }
+
+      function getMetricsSnapshot() {
+        var data = validateAndNormalizeInputs();
+        var precision = safeDivide(data.tp, data.tp + data.fp);
+        var recall = safeDivide(data.tp, data.tp + data.fn);
+        var f1 = safeDivide(2 * precision * recall, precision + recall);
+        var accuracy = safeDivide(data.tp + data.tn, data.tp + data.tn + data.fp + data.fn);
+        var rr = data.rank > 0 ? 1 / data.rank : 0;
+        var mrr = computeMrrFromRuns(readRuns());
+
+        return {
+          tp: data.tp,
+          fp: data.fp,
+          fn: data.fn,
+          tn: data.tn,
+          precision: precision,
+          recall: recall,
+          f1: f1,
+          accuracy: accuracy,
+          rr: rr,
+          mrr: mrr
+        };
+      }
+
+      function readRuns() {
+        try {
+          var raw = localStorage.getItem(RUNS_KEY);
+          if (!raw) return [];
+          var parsed = JSON.parse(raw);
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function writeRuns(runs) {
+        localStorage.setItem(RUNS_KEY, JSON.stringify(runs.slice(0, RUNS_LIMIT)));
+      }
+
+      function getRunRr(run) {
+        var metrics = run && run.metrics ? run.metrics : {};
+        var rr = Number(metrics.rr);
+        if (Number.isFinite(rr)) return rr;
+        var input = run && run.input ? run.input : {};
+        var rank = Number(input.rank);
+        if (!Number.isFinite(rank) || rank <= 0) return 0;
+        return 1 / rank;
+      }
+
+      function computeMrrFromRuns(runs) {
+        if (!Array.isArray(runs) || runs.length === 0) return 0;
+        var total = runs.reduce(function (sum, run) {
+          return sum + getRunRr(run);
+        }, 0);
+        return total / runs.length;
+      }
+
+      function hasActiveFilters() {
+        var q = String(historySearchInput.value || "").trim();
+        var model = String(historyModelFilterInput.value || "").trim();
+        return q.length > 0 || model.length > 0;
+      }
+
+      function parseQuickMrrRanks(raw) {
+        var trimmed = String(raw || "").trim();
+        if (!trimmed) return [];
+        var parts = trimmed.split(",");
+        var values = [];
+        for (var i = 0; i < parts.length; i += 1) {
+          var token = parts[i].trim();
+          if (!token) return null;
+          var rank = Number(token);
+          if (!Number.isFinite(rank) || rank < 0) return null;
+          values.push(rank);
+        }
+        return values;
+      }
+
+      function calculateQuickMrr() {
+        if (!quickMrrRanksInput || !quickMrrRrList || !quickMrrValue) return;
+        var parsedRanks = parseQuickMrrRanks(quickMrrRanksInput.value);
+        if (parsedRanks === null) {
+          quickMrrRrList.innerHTML = "<strong>RR list:</strong> Invalid input";
+          quickMrrValue.innerHTML = "<strong>MRR:</strong> Invalid input";
+          return;
+        }
+        if (parsedRanks.length === 0) {
+          quickMrrRrList.innerHTML = "<strong>RR list:</strong> -";
+          quickMrrValue.innerHTML = "<strong>MRR:</strong> -";
+          return;
+        }
+
+        var rrList = parsedRanks.map(function (rank) {
+          return rank > 0 ? 1 / rank : 0;
+        });
+        var rrText = rrList.map(function (rr) {
+          return round2(rr);
+        }).join(", ");
+        var mrr = rrList.reduce(function (sum, rr) {
+          return sum + rr;
+        }, 0) / rrList.length;
+
+        quickMrrRrList.innerHTML = "<strong>RR list:</strong> [" + rrText + "]";
+        quickMrrValue.innerHTML = "<strong>MRR:</strong> " + round2(mrr);
+      }
+
+      function normalizeModelName(name) {
+        var normalized = String(name || "").trim();
+        return normalized || "unknown";
+      }
+
+      function getColorForModel(modelName) {
+        var palette = [
+          "#4f46e5",
+          "#0ea5e9",
+          "#10b981",
+          "#f59e0b",
+          "#ef4444",
+          "#8b5cf6",
+          "#ec4899",
+          "#14b8a6",
+          "#f97316",
+          "#64748b"
+        ];
+        var hash = 0;
+        for (var i = 0; i < modelName.length; i += 1) {
+          hash = (hash * 31 + modelName.charCodeAt(i)) >>> 0;
+        }
+        return palette[hash % palette.length];
+      }
+
+      function filterRuns(runs) {
+        var q = String(historySearchInput.value || "").trim().toLowerCase();
+        var modelFilter = String(historyModelFilterInput.value || "").trim().toLowerCase();
+        return runs.filter(function (run) {
+          var context = run.context || {};
+          var model = String(context.model || "").toLowerCase();
+          var prompt = String(context.promptName || "").toLowerCase();
+          var date = String(run.date || "").toLowerCase();
+          var matchQ = !q || model.indexOf(q) !== -1 || prompt.indexOf(q) !== -1 || date.indexOf(q) !== -1;
+          var matchModel = !modelFilter || model.indexOf(modelFilter) !== -1;
+          return matchQ && matchModel;
+        });
+      }
+
+      function renderLegend(modelColors) {
+        if (!chartLegend) return;
+        var models = Object.keys(modelColors);
+        if (models.length === 0) {
+          chartLegend.innerHTML = "<span class='history-empty'>Нет данных для легенды.</span>";
+          return;
+        }
+        chartLegend.innerHTML = models.map(function (model) {
+          var color = modelColors[model];
+          return "<span class='legend-item'><span class='legend-color' style='background:" + color + ";'></span>" + model + "</span>";
+        }).join("");
+      }
+
+      function renderMrrChart(runs) {
+        if (!mrrChart) return;
+        var ctx = mrrChart.getContext("2d");
+        if (!ctx) return;
+        var width = mrrChart.width;
+        var height = mrrChart.height;
+        var pad = { left: 48, right: 12, top: 12, bottom: 28 };
+
+        ctx.clearRect(0, 0, width, height);
+
+        var axisColor = getComputedStyle(document.body).getPropertyValue("--muted").trim() || "#64748b";
+        ctx.strokeStyle = axisColor;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(pad.left, pad.top);
+        ctx.lineTo(pad.left, height - pad.bottom);
+        ctx.lineTo(width - pad.right, height - pad.bottom);
+        ctx.stroke();
+
+        ctx.fillStyle = axisColor;
+        ctx.font = "12px Inter, Arial, sans-serif";
+        ctx.textAlign = "right";
+        ctx.textBaseline = "top";
+        ctx.fillText("RR", pad.left - 12, pad.top + 4);
+        ctx.textAlign = "start";
+        ctx.textBaseline = "alphabetic";
+        ctx.fillText("Run #", width - 44, height - 8);
+
+        if (runs.length === 0) {
+          renderLegend({});
+          return;
+        }
+
+        var innerW = width - pad.left - pad.right;
+        var innerH = height - pad.top - pad.bottom;
+        var maxIdx = Math.max(runs.length - 1, 1);
+        var xInset = 10;
+        var sortedRuns = runs.slice().reverse();
+        var modelColors = {};
+
+        sortedRuns.forEach(function (run) {
+          var model = normalizeModelName((run.context || {}).model);
+          if (!modelColors[model]) {
+            modelColors[model] = getColorForModel(model);
+          }
+        });
+
+        var pointsByModel = {};
+        sortedRuns.forEach(function (run, idx) {
+          var x = pad.left + xInset + (idx / maxIdx) * Math.max(innerW - xInset, 1);
+          var y = pad.top + (1 - Math.max(0, Math.min(1, getRunRr(run)))) * innerH;
+          var model = normalizeModelName((run.context || {}).model);
+          if (!pointsByModel[model]) pointsByModel[model] = [];
+          pointsByModel[model].push({ x: x, y: y });
+        });
+
+        Object.keys(pointsByModel).forEach(function (model) {
+          var points = pointsByModel[model];
+          if (points.length === 0) return;
+          ctx.strokeStyle = modelColors[model];
+          ctx.fillStyle = modelColors[model];
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          points.forEach(function (point, idx) {
+            if (idx === 0) ctx.moveTo(point.x, point.y);
+            else ctx.lineTo(point.x, point.y);
+          });
+          ctx.stroke();
+          points.forEach(function (point) {
+            ctx.beginPath();
+            ctx.arc(point.x, point.y, 2.6, 0, Math.PI * 2);
+            ctx.fill();
+          });
+        });
+
+        renderLegend(modelColors);
+      }
+
+      function renderStats(allRuns, filteredRuns) {
+        if (allRuns.length === 0) {
+          avgPrecisionValue.textContent = "0.00";
+          avgRecallValue.textContent = "0.00";
+          avgMrrValue.textContent = "0.00";
+          filteredMrrValue.textContent = "0.00";
+          bestRunValue.textContent = "-";
+          worstRunValue.textContent = "-";
+          mrrValue.textContent = "0.00";
+          mrrMeta.textContent = "По всем run: 0.00";
+          renderMrrChart(filteredRuns);
+          return;
+        }
+
+        var totals = filteredRuns.reduce(function (acc, run) {
+          acc.p += Number(run.metrics.precision) || 0;
+          acc.r += Number(run.metrics.recall) || 0;
+          return acc;
+        }, { p: 0, r: 0 });
+
+        var allMrr = computeMrrFromRuns(allRuns);
+        var filteredMrr = computeMrrFromRuns(filteredRuns);
+        var hasFilter = hasActiveFilters();
+
+        if (filteredRuns.length > 0) {
+          var best = filteredRuns.reduce(function (maxRun, run) {
+            return getRunRr(run) > getRunRr(maxRun) ? run : maxRun;
+          }, filteredRuns[0]);
+          var worst = filteredRuns.reduce(function (minRun, run) {
+            return getRunRr(run) < getRunRr(minRun) ? run : minRun;
+          }, filteredRuns[0]);
+          bestRunValue.textContent = best.date + " (RR: " + round2(getRunRr(best)) + ")";
+          worstRunValue.textContent = worst.date + " (RR: " + round2(getRunRr(worst)) + ")";
+        } else {
+          bestRunValue.textContent = "-";
+          worstRunValue.textContent = "-";
+        }
+
+        avgPrecisionValue.textContent = filteredRuns.length > 0 ? round2(totals.p / filteredRuns.length) : "0.00";
+        avgRecallValue.textContent = filteredRuns.length > 0 ? round2(totals.r / filteredRuns.length) : "0.00";
+        avgMrrValue.textContent = round2(allMrr);
+        filteredMrrValue.textContent = hasFilter && filteredRuns.length === 0 ? "—" : round2(filteredMrr);
+        mrrValue.textContent = round2(allMrr);
+        mrrMeta.textContent = "По всем run: " + round2(allMrr) + " | По фильтру: " + (hasFilter && filteredRuns.length === 0 ? "—" : round2(filteredMrr));
+        renderMrrChart(filteredRuns);
+      }
+
+      function renderHistory() {
+        var runs = readRuns();
+        var filteredRuns = filterRuns(runs);
+        if (filteredRuns.length === 0) {
+          historyList.innerHTML = runs.length === 0
+            ? "<p class='history-empty'>История пока пуста.</p>"
+            : "<p class='history-empty'>Нет записей по выбранному фильтру.</p>";
+          renderStats(runs, filteredRuns);
+          return;
+        }
+
+        historyList.innerHTML = filteredRuns.map(function (run) {
+          var sourceIndex = runs.indexOf(run);
+          var context = run.context || {};
+          var metrics = run.metrics || {};
+          return (
+            "<div class='history-item'>" +
+              "<div class='history-top'>" +
+                "<p class='history-date'>" + run.date + "</p>" +
+                "<button class='delete-entry-btn' data-index='" + sourceIndex + "' type='button'>Удалить запись</button>" +
+              "</div>" +
+              "<p class='history-metrics'>Model: " + (context.model || "—") + " · Prompt: " + (context.promptName || "—") + "</p>" +
+              "<div class='history-grid'>" +
+                "<div class='history-cell'>Precision<strong>" + round2(metrics.precision || 0) + "</strong></div>" +
+                "<div class='history-cell'>Recall<strong>" + round2(metrics.recall || 0) + "</strong></div>" +
+                "<div class='history-cell'>F1<strong>" + round2(metrics.f1 || 0) + "</strong></div>" +
+                "<div class='history-cell'>Accuracy<strong>" + round2(metrics.accuracy || 0) + "</strong></div>" +
+                "<div class='history-cell'>RR<strong>" + round2(metrics.rr || 0) + "</strong></div>" +
+              "</div>" +
+            "</div>"
+          );
+        }).join("");
+        renderStats(runs, filteredRuns);
+      }
+
+      function saveRun() {
+        var current = window.metricsData;
+        if (!current || !current.input || !current.metrics) return;
+        var runs = readRuns();
+
+        runs.unshift({
+          id: Date.now(),
+          date: formatDate(new Date()),
+          context: {
+            model: String(modelInput.value || "").trim(),
+            promptName: String(promptNameInput.value || "").trim(),
+            notes: ""
+          },
+          input: {
+            rank: current.input.rank
+          },
+          metrics: {
+            precision: current.metrics.precision,
+            recall: current.metrics.recall,
+            f1: current.metrics.f1,
+            accuracy: current.metrics.accuracy,
+            rr: current.metrics.rr
+          }
+        });
+
+        if (runs.length > RUNS_LIMIT) {
+          runs = runs.slice(0, RUNS_LIMIT);
+        }
+
+        writeRuns(runs);
+        renderHistory();
+      }
+
+      function applyTheme(theme) {
+        var isDark = theme === "dark";
+        document.body.classList.toggle("dark-theme", isDark);
+        themeToggleBtn.setAttribute("title", isDark ? "Светлая тема" : "Темная тема");
+        themeToggleBtn.setAttribute("aria-label", isDark ? "Включить светлую тему" : "Включить темную тему");
+      }
+
+      function initTheme() {
+        var savedTheme = localStorage.getItem(THEME_KEY);
+        if (savedTheme === "dark" || savedTheme === "light") {
+          applyTheme(savedTheme);
+          return;
+        }
+        var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        applyTheme(prefersDark ? "dark" : "light");
+      }
+
+      function openResultsTableWindow() {
+        var s = getMetricsSnapshot();
+        var isDarkTheme = document.body.classList.contains("dark-theme");
+        var p = round2(s.precision);
+        var r = round2(s.recall);
+        var f = round2(s.f1);
+        var a = round2(s.accuracy);
+        var rr = round2(s.rr);
+        var m = round2(s.mrr);
+
+        var rows = [
+          {
+            metric: "Precision@10 (Точность)",
+            purpose: "Оценка чистоты результатов: доля TP среди найденных",
+            calculation: s.tp + " / (" + s.tp + " + " + s.fp + ") = " + p,
+            qa: "Контроль ложных срабатываний (FP)"
+          },
+          {
+            metric: "Recall@10 (Полнота)",
+            purpose: "Оценка охвата: доля TP среди всех релевантных",
+            calculation: s.tp + " / (" + s.tp + " + " + s.fn + ") = " + r,
+            qa: "Контроль пропущенных элементов (FN)"
+          },
+          {
+            metric: "F1-Score",
+            purpose: "Баланс между Precision и Recall",
+            calculation: "2 * (" + p + " * " + r + ") / (" + p + " + " + r + ") = " + f,
+            qa: "Общая сбалансированная оценка"
+          },
+          {
+            metric: "Accuracy",
+            purpose: "Доля корректных классификаций от общего числа кейсов",
+            calculation: "(" + s.tp + " + " + s.tn + ") / (" + s.tp + " + " + s.tn + " + " + s.fp + " + " + s.fn + ") = " + a,
+            qa: "Базовая интегральная оценка качества"
+          },
+          {
+            metric: "RR",
+            purpose: "Обратная величина ранга (позиции) первого найденного релевантного элемента",
+            calculation: "1 / rank = " + rr,
+            qa: "Проверка качества первого релевантного попадания"
+          },
+          {
+            metric: "MRR",
+            purpose: "Средняя позиция первого релевантного результата",
+            calculation: "среднее значение (1 / rank) = " + m,
+            qa: "Оценка качества ранжирования"
+          }
+        ];
+        var csvHeaders = ["Метрика", "Назначение", "Расчёт", "Значение для QA-инженера"];
+        var csvRows = [csvHeaders].concat(
+          rows.map(function (row) {
+            return [row.metric, row.purpose, row.calculation, row.qa];
+          })
+        );
+        var csvContent = csvRows
+          .map(function (line) {
+            return line.map(function (cell) {
+              return "\"" + String(cell).replace(/"/g, "\"\"") + "\"";
+            }).join(",");
+          })
+          .join("\n");
+
+        function escapeHtml(str) {
+          return String(str)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#39;");
+        }
+
+        var rowsHtml = rows.map(function (row) {
+          return "<tr>" +
+            "<td><strong>" + escapeHtml(row.metric) + "</strong></td>" +
+            "<td>" + escapeHtml(row.purpose) + "</td>" +
+            "<td class='num'>" + escapeHtml(row.calculation) + "</td>" +
+            "<td>" + escapeHtml(row.qa) + "</td>" +
+            "</tr>";
+        }).join("");
+
+        var html =
+          "<!DOCTYPE html><html lang='ru'><head><meta charset='UTF-8'><title>Таблица метрик</title>" +
+          "<style>" +
+          "body{font-family:Arial,sans-serif;background:" + (isDarkTheme ? "#0b1220" : "#f8fafc") + ";color:" + (isDarkTheme ? "#e5e7eb" : "#1f2937") + ";margin:24px;}" +
+          "h1{margin:0 0 16px;font-size:24px;}" +
+          ".controls{margin-bottom:14px;}" +
+          "button{border:0;background:#4f46e5;color:#fff;border-radius:8px;padding:10px 14px;font-weight:600;cursor:pointer;}" +
+          "table{width:100%;border-collapse:collapse;background:" + (isDarkTheme ? "#111827" : "#fff") + ";}" +
+          "th,td{border:1px solid " + (isDarkTheme ? "#374151" : "#d1d5db") + ";padding:10px;vertical-align:top;text-align:left;}" +
+          "th{background:" + (isDarkTheme ? "#1f2937" : "#e0e7ff") + ";font-weight:700;}" +
+          ".num{font-weight:700;color:" + (isDarkTheme ? "#f9fafb" : "#111827") + ";}" +
+          "</style></head><body>" +
+          "<h1>Таблица результатов метрик</h1>" +
+          "<div class='controls'><button id='downloadCsvBtn' type='button'>Скачать как CSV</button></div>" +
+          "<table><thead><tr>" +
+          "<th>Метрика</th><th>Назначение</th><th>Расчёт</th><th>Значение для QA-инженера</th>" +
+          "</tr></thead><tbody>" + rowsHtml + "</tbody></table>" +
+          "<script>" +
+          "var csvContent = " + JSON.stringify(csvContent) + ";" +
+          "document.getElementById('downloadCsvBtn').addEventListener('click', function(){ " +
+          "var blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });" +
+          "var url = URL.createObjectURL(blob);" +
+          "var link = document.createElement('a');" +
+          "link.href = url;" +
+          "link.download = 'ai-metrics-results.csv';" +
+          "document.body.appendChild(link);" +
+          "link.click();" +
+          "document.body.removeChild(link);" +
+          "URL.revokeObjectURL(url);" +
+          "});" +
+          "<\/script>" +
+          "</body></html>";
+
+        var pageBlob = new Blob([html], { type: "text/html;charset=utf-8;" });
+        var pageUrl = URL.createObjectURL(pageBlob);
+        window.open(pageUrl, "_blank", "width=1100,height=700");
+        setTimeout(function () {
+          URL.revokeObjectURL(pageUrl);
+        }, 15000);
+      }
+
+      function clearAll() {
+        tpInput.value = "0";
+        fpInput.value = "0";
+        fnInput.value = "0";
+        tnInput.value = "0";
+        kInput.value = "10";
+        rankInput.value = "0";
+        modelInput.value = "";
+        promptNameInput.value = "";
+        errorEl.textContent = "";
+        calculate();
+      }
+
+      document.querySelectorAll(".spin-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var targetId = btn.getAttribute("data-target");
+          var input = document.getElementById(targetId);
+          if (!input) return;
+          if (btn.classList.contains("spin-up")) {
+            input.stepUp();
+          } else {
+            input.stepDown();
+          }
+          input.dispatchEvent(new Event("input", { bubbles: true }));
+        });
+      });
+
+      [tpInput, fpInput, fnInput, tnInput, kInput, rankInput].forEach(function (el) {
+        el.addEventListener("input", calculate);
+      });
+      calculateBtn.addEventListener("click", function () {
+        calculate();
+        saveRun();
+      });
+      clearBtn.addEventListener("click", clearAll);
+      showResultsTableBtn.addEventListener("click", openResultsTableWindow);
+      themeToggleBtn.addEventListener("click", function () {
+        var nextTheme = document.body.classList.contains("dark-theme") ? "light" : "dark";
+        localStorage.setItem(THEME_KEY, nextTheme);
+        applyTheme(nextTheme);
+        renderMrrChart(readRuns());
+      });
+      clearHistoryBtn.addEventListener("click", function () {
+        writeRuns([]);
+        renderHistory();
+      });
+      historyList.addEventListener("click", function (event) {
+        var target = event.target;
+        if (!target.classList.contains("delete-entry-btn")) return;
+        var index = Number(target.getAttribute("data-index"));
+        if (!Number.isInteger(index) || index < 0) return;
+        var runs = readRuns();
+        runs.splice(index, 1);
+        writeRuns(runs);
+        renderHistory();
+      });
+      historySearchInput.addEventListener("input", renderHistory);
+      historyModelFilterInput.addEventListener("input", renderHistory);
+      quickMrrRanksInput.addEventListener("input", calculateQuickMrr);
+
+      calculate();
+      calculateQuickMrr();
+      initTheme();
+      renderHistory();
+      window.addEventListener("resize", function () {
+        renderMrrChart(readRuns());
+      });
+    })();
+  </script>
+</body>
+</html>
