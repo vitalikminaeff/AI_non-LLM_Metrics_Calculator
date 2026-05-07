@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Metrics Calculator</title>
-  <script defer type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=QCtyiGsbgu60zLrI5TAlss5lgmsvrl_BDSMPYw1fnJIojXgNdWrSCnWdG3-St5KiKa5aHJVhtPt8pzM6dpWnJg3mRDC1XVYEwjd7xfymBoxrDfUo9ducz9t4LLu4TrG8zrkrBONcJnkrmnNBDZ30X35DnWb98TMrBIhor3jhzlP0-MXYT-5hOKn18InC3G1S5rk162m1WF_vaWTjo-PBw6hTO0mHjsUlVy0NzoqDdmzGKGzNR4UcGmHauHhFmoQfSarLQAJlon0NDU8p713NlZJQsxp6eYgtGhSX8UwaEUflRhEYh6kN6T9jYlI-n8nfuJKaejTo-3J5CHj5yI6cDhgrxWCkoMYk4Wx1dJveua5KgCBdJYNn0zny0LS2u3Q2c-Gd8xnDXMcVvZSA34VOYUFE3Q_6qg1u77e3BeuLHwYKvIW3TNk8ksy7oyXj9a1DAR3n-mkhGBaVGgO7ldj82mJQmdtIHLJFnbVTXTrk4iT3zRDqrfdkD2IL6xasve0dZpvrdG7VwdjXgbo8LykP_fS9pG8a88pZSPQEG4oE9us6s9WGa-L2j8OlGso5btTCetKyCvWUbWinCzbwgvlHs7W-2FeZUGAJOoiZpQw0YttS909g7ZABzk4F8DJbZSCcT9KPcjOQnAc3MIMCvjtCLg" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly93ZWJhdHRhY2gubWFpbC55YW5kZXgubmV0L21lc3NhZ2VfcGFydF9yZWFsL2luZGV4Lmh0bWw_bmFtZT1pbmRleC5odG1sJnNpZD1ZV1Z6WDNOcFpEcDdJbUZsYzB0bGVVbGtJam9pTVRjNElpd2lhRzFoWTB0bGVVbGtJam9pTVRjNElpd2lhWFpDWVhObE5qUWlPaUkxZDBOd1VXeEZRbVZGV2s5NlRrUXZWM2MzYUVaUlBUMGlMQ0p6YVdSQ1lYTmxOalFpT2lKTk5sWlVRVzFHTVd0alYzSlFPSHBIVm1vNGNIUnlkbmxDTUVsNlFVOU9PVUZKTjFwNlRraGlhSE5NVTJwUWJqUlNObUZGVUhCbFkwMDJTMmRYYlVaWlFqUmFUSGhxUVc0NUsySkVXR2hXU2pSa1IwZFlRMUZUVFcwNVVHbHhhSHBQUkZwSVpYaEZhM0J5Wm5wdFVqTTFiVTlqT1ZkU0wxaGFVemQ0TmpCUFN5SXNJbWh0WVdOQ1lYTmxOalFpT2lKWlNVYzJSR05GU1RKVE4wMWphSGxvWWs1U1ltZFdZbVZvT0V4bVlqVlVWWFJWV1ZoTVJHdERjblJaUFNKOQ"/><style>
+  <style>
     :root {
       --bg: #f8fafc;
       --surface: #ffffff;
@@ -1495,6 +1495,14 @@
         };
       }
 
+      function runSoon(cb) {
+        if (typeof window.requestIdleCallback === "function") {
+          window.requestIdleCallback(cb, { timeout: 250 });
+          return;
+        }
+        setTimeout(cb, 0);
+      }
+
       function redrawFilteredChart() {
         renderMrrChart(filterRuns(readRuns()));
       }
@@ -1595,9 +1603,14 @@
         var accuracy = safeDivide(data.tp + data.tn, data.tp + data.tn + data.fp + data.fn);
         var rr = data.rank > 0 ? 1 / data.rank : 0;
         var allRuns = readRuns();
-        var filteredRuns = filterRuns(allRuns);
-        var allMrr = computeMrrFromRuns(allRuns);
-        var filteredMrr = computeMrrFromRuns(filteredRuns);
+        var filteredRuns = [];
+        var allMrr = 0;
+        var filteredMrr = 0;
+        if (allRuns.length) {
+          filteredRuns = filterRuns(allRuns);
+          allMrr = computeMrrFromRuns(allRuns);
+          filteredMrr = computeMrrFromRuns(filteredRuns);
+        }
 
         precisionValue.textContent = round2(precision);
         recallValue.textContent = round2(recall);
@@ -1653,6 +1666,17 @@
         var limited = Array.isArray(runs) ? runs.slice(0, RUNS_LIMIT) : [];
         cachedRuns = limited.slice();
         localStorage.setItem(RUNS_KEY, JSON.stringify(limited));
+      }
+
+      function ensureStatsInSafeMode() {
+        avgPrecisionValue.textContent = "0.00";
+        avgRecallValue.textContent = "0.00";
+        avgMrrValue.textContent = "0.00";
+        filteredMrrValue.textContent = "0.00";
+        bestRunValue.textContent = "-";
+        worstRunValue.textContent = "-";
+        mrrValue.textContent = "0.00";
+        mrrMeta.textContent = "По всем run: 0.00";
       }
 
       function getRunRr(run) {
@@ -2255,14 +2279,7 @@
 
       function renderStats(allRuns, filteredRuns) {
         if (allRuns.length === 0) {
-          avgPrecisionValue.textContent = "0.00";
-          avgRecallValue.textContent = "0.00";
-          avgMrrValue.textContent = "0.00";
-          filteredMrrValue.textContent = "0.00";
-          bestRunValue.textContent = "-";
-          worstRunValue.textContent = "-";
-          mrrValue.textContent = "0.00";
-          mrrMeta.textContent = "По всем run: 0.00";
+          ensureStatsInSafeMode();
           clearMrrChartSurface();
           return;
         }
@@ -2337,6 +2354,17 @@
           );
         }).join("");
         renderStats(runs, filteredRuns);
+      }
+
+      function initialHydration() {
+        var runs = readRuns();
+        if (!runs.length) {
+          historyList.innerHTML = "<p class='history-empty'>История пока пуста.</p>";
+          ensureStatsInSafeMode();
+          clearMrrChartSurface();
+          return;
+        }
+        renderHistory();
       }
 
       function lazyRenderConfusionMatrix(panelEl) {
@@ -2469,7 +2497,8 @@
         var nextTheme = document.body.classList.contains("dark-theme") ? "light" : "dark";
         localStorage.setItem(THEME_KEY, nextTheme);
         applyTheme(nextTheme);
-        redrawFilteredChart();
+        chartStyleCache = null;
+        debouncedRedrawFilteredChart();
       });
       clearHistoryBtn.addEventListener("click", function () {
         writeRuns([]);
@@ -2576,7 +2605,7 @@
       calculate();
       calculateQuickMrr();
       initHistoryPanelVisibility();
-      renderHistory();
+      runSoon(initialHydration);
       window.addEventListener("resize", debouncedRedrawFilteredChart);
       }
 
