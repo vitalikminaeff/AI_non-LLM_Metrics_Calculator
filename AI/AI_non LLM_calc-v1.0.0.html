@@ -1,0 +1,2591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Metrics Calculator</title>
+  <script defer type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=QCtyiGsbgu60zLrI5TAlss5lgmsvrl_BDSMPYw1fnJIojXgNdWrSCnWdG3-St5KiKa5aHJVhtPt8pzM6dpWnJg3mRDC1XVYEwjd7xfymBoxrDfUo9ducz9t4LLu4TrG8zrkrBONcJnkrmnNBDZ30X35DnWb98TMrBIhor3jhzlP0-MXYT-5hOKn18InC3G1S5rk162m1WF_vaWTjo-PBw6hTO0mHjsUlVy0NzoqDdmzGKGzNR4UcGmHauHhFmoQfSarLQAJlon0NDU8p713NlZJQsxp6eYgtGhSX8UwaEUflRhEYh6kN6T9jYlI-n8nfuJKaejTo-3J5CHj5yI6cDhgrxWCkoMYk4Wx1dJveua5KgCBdJYNn0zny0LS2u3Q2c-Gd8xnDXMcVvZSA34VOYUFE3Q_6qg1u77e3BeuLHwYKvIW3TNk8ksy7oyXj9a1DAR3n-mkhGBaVGgO7ldj82mJQmdtIHLJFnbVTXTrk4iT3zRDqrfdkD2IL6xasve0dZpvrdG7VwdjXgbo8LykP_fS9pG8a88pZSPQEG4oE9us6s9WGa-L2j8OlGso5btTCetKyCvWUbWinCzbwgvlHs7W-2FeZUGAJOoiZpQw0YttS909g7ZABzk4F8DJbZSCcT9KPcjOQnAc3MIMCvjtCLg" charset="UTF-8"></script><link rel="stylesheet" crossorigin="anonymous" href="https://gc.kis.v2.scr.kaspersky-labs.com/E3E8934C-235A-4B0E-825A-35A08381A191/abn/main.css?attr=aHR0cHM6Ly93ZWJhdHRhY2gubWFpbC55YW5kZXgubmV0L21lc3NhZ2VfcGFydF9yZWFsL2luZGV4Lmh0bWw_bmFtZT1pbmRleC5odG1sJnNpZD1ZV1Z6WDNOcFpEcDdJbUZsYzB0bGVVbGtJam9pTVRjNElpd2lhRzFoWTB0bGVVbGtJam9pTVRjNElpd2lhWFpDWVhObE5qUWlPaUkxZDBOd1VXeEZRbVZGV2s5NlRrUXZWM2MzYUVaUlBUMGlMQ0p6YVdSQ1lYTmxOalFpT2lKTk5sWlVRVzFHTVd0alYzSlFPSHBIVm1vNGNIUnlkbmxDTUVsNlFVOU9PVUZKTjFwNlRraGlhSE5NVTJwUWJqUlNObUZGVUhCbFkwMDJTMmRYYlVaWlFqUmFUSGhxUVc0NUsySkVXR2hXU2pSa1IwZFlRMUZUVFcwNVVHbHhhSHBQUkZwSVpYaEZhM0J5Wm5wdFVqTTFiVTlqT1ZkU0wxaGFVemQ0TmpCUFN5SXNJbWh0WVdOQ1lYTmxOalFpT2lKWlNVYzJSR05GU1RKVE4wMWphSGxvWWs1U1ltZFdZbVZvT0V4bVlqVlVWWFJWV1ZoTVJHdERjblJaUFNKOQ"/><style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --surface-soft: #f8fbff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --accent: #4f46e5;
+      --accent-strong: #4338ca;
+      --accent-soft: #eef2ff;
+      --good: #4338ca;
+      --good-bg: #f8fbff;
+      --warn: #4338ca;
+      --warn-bg: #f8fbff;
+      --danger: #dc2626;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --radius: 12px;
+    }
+
+    body.dark-theme {
+      --bg: #0f172a;
+      --surface: #111827;
+      --surface-soft: #0b1220;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --border: #334155;
+      --accent: #818cf8;
+      --accent-strong: #a5b4fc;
+      --accent-soft: #1e293b;
+      --good: #a5b4fc;
+      --good-bg: #0b1220;
+      --warn: #a5b4fc;
+      --warn-bg: #0b1220;
+      --danger: #f87171;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.24);
+      --shadow-md: 0 18px 40px rgba(0, 0, 0, 0.36);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #f1f5ff 0%, var(--bg) 36%);
+      color: var(--text);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    .container {
+      width: min(100% - 32px, 900px);
+      margin: 32px auto 48px;
+      display: grid;
+      gap: 24px;
+    }
+
+    .header {
+      text-align: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: calc(var(--radius) + 4px);
+      box-shadow: var(--shadow-md);
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::after {
+      content: "";
+      position: absolute;
+      inset: auto -64px -64px auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(79, 70, 229, 0.16) 0%, rgba(79, 70, 229, 0) 70%);
+      pointer-events: none;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface-soft);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: translateY(-1px);
+      background: var(--accent-soft);
+    }
+
+    .theme-toggle-icon {
+      width: 18px;
+      height: 18px;
+      position: absolute;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .icon-moon {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .icon-sun {
+      opacity: 0;
+      transform: scale(0.8) rotate(-20deg);
+    }
+
+    body.dark-theme .icon-moon {
+      opacity: 0;
+      transform: scale(0.8) rotate(20deg);
+    }
+
+    body.dark-theme .icon-sun {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+
+    .layout {
+      display: grid;
+      gap: 24px;
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 20px;
+    }
+
+    .panel h2 {
+      margin: 0 0 4px;
+      font-size: 1.125rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .panel-subtitle {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      margin: 0;
+      color: var(--text);
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hint {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      border: 1px solid #c7d2fe;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: help;
+      user-select: none;
+    }
+
+    .number-wrap {
+      position: relative;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+      padding: 10px 12px;
+      font-size: 0.95rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+    }
+
+    input[type="number"] {
+      appearance: textfield;
+      -webkit-appearance: textfield;
+      padding-right: 40px;
+    }
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input::placeholder {
+      color: #94a3b8;
+    }
+
+    input:focus {
+      border-color: #818cf8;
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+      background: var(--surface);
+    }
+
+    .spin-controls {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.16s ease;
+    }
+
+    .number-wrap:hover .spin-controls,
+    .number-wrap:focus-within .spin-controls {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .spin-btn {
+      width: 18px;
+      height: 13px;
+      padding: 0;
+      border: 0;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--accent);
+      box-shadow: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .spin-btn:hover {
+      background: color-mix(in srgb, var(--accent) 16%, transparent);
+    }
+
+    .spin-btn:active {
+      transform: translateY(0);
+    }
+
+    .spin-btn svg {
+      width: 10px;
+      height: 10px;
+      display: block;
+      fill: currentColor;
+    }
+
+    .error {
+      min-height: 20px;
+      margin-top: 12px;
+      color: var(--danger);
+      font-size: 0.84rem;
+    }
+
+    .actions {
+      margin-top: 4px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      line-height: 1;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    #calculateBtn {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-strong) 100%);
+      color: #ffffff;
+      box-shadow: 0 8px 16px rgba(79, 70, 229, 0.24);
+    }
+
+    #calculateBtn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 20px rgba(79, 70, 229, 0.3);
+    }
+
+    #clearBtn,
+    #clearHistoryBtn {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    #clearBtn:hover,
+    #clearHistoryBtn:hover {
+      background: var(--accent-soft);
+      border-color: #c7d2fe;
+    }
+
+    #randomInputBtn {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 11px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      border-radius: 8px;
+      box-shadow: none;
+    }
+
+    #randomInputBtn:hover {
+      background: var(--accent-soft);
+      border-color: #c7d2fe;
+      transform: translateY(-1px);
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .metric-card {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .metric-card.positive {
+      background: linear-gradient(180deg, var(--good-bg) 0%, var(--surface) 48%);
+    }
+
+    .metric-card.warning {
+      background: linear-gradient(180deg, var(--warn-bg) 0%, var(--surface) 48%);
+    }
+
+    .metric-title {
+      margin: 0 0 6px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .metric-tip {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.4;
+    }
+
+    .formula {
+      margin: 0 0 12px;
+      font-size: 0.76rem;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      letter-spacing: 0.02em;
+      padding: 7px 8px;
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      background: var(--surface-soft);
+      white-space: nowrap;
+      overflow-x: auto;
+    }
+
+    .value {
+      margin: 0 0 6px;
+      font-size: clamp(1.6rem, 3.4vw, 2rem);
+      font-weight: 800;
+      color: var(--accent-strong);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+      line-height: 1.15;
+      transition: color 0.25s ease;
+      animation: appear 0.35s ease;
+    }
+
+    .metric-card.positive .value {
+      color: var(--good);
+    }
+
+    .metric-card.warning .value {
+      color: var(--warn);
+    }
+
+    .subvalue {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+      word-break: break-word;
+    }
+
+    .history-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .history-header-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .history-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--muted);
+      user-select: none;
+    }
+
+    .history-toggle input {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .history-toggle-track {
+      width: 32px;
+      height: 18px;
+      border-radius: 999px;
+      background: var(--border);
+      position: relative;
+      transition: background 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    body.dark-theme .history-toggle-track {
+      background: #475569;
+    }
+
+    .history-toggle-thumb {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #fff;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.2s ease;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.2);
+    }
+
+    .history-toggle input:checked + .history-toggle-track {
+      background: var(--accent);
+    }
+
+    .history-toggle input:checked + .history-toggle-track .history-toggle-thumb {
+      transform: translateX(14px);
+    }
+
+    .history-panel-body.is-hidden {
+      display: none;
+    }
+
+    .history-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .history-empty {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .history-item {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+      padding: 12px;
+    }
+
+    .history-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .history-date {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+    }
+
+    .history-metrics {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+
+    .history-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .history-cell {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      padding: 8px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .history-cell strong {
+      display: block;
+      margin-top: 2px;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+    }
+
+    .history-cm-wrap {
+      margin-top: 10px;
+    }
+
+    .cm-toggle-btn {
+      padding: 7px 12px;
+      font-size: 0.79rem;
+      font-weight: 600;
+      line-height: 1.15;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .cm-toggle-btn:hover {
+      background: var(--accent-soft);
+      border-color: #c7d2fe;
+    }
+
+    .history-cm-panel {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.4s ease, opacity 0.28s ease, margin-top 0.28s ease;
+      margin-top: 0;
+    }
+
+    .history-cm-wrap.is-open .history-cm-panel {
+      max-height: 480px;
+      opacity: 1;
+      margin-top: 10px;
+    }
+
+    .cm-matrix-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      padding: 12px;
+      font-size: 0.76rem;
+    }
+
+    .cm-matrix-title {
+      text-align: center;
+      margin: -6px 0 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .cm-matrix-grid {
+      display: grid;
+      grid-template-columns: minmax(26px, 0.32fr) minmax(52px, 0.72fr) 1fr 1fr;
+      grid-template-rows: auto auto auto auto;
+      gap: 6px;
+      align-items: stretch;
+    }
+
+    .cm-top-left-corner {
+      grid-row: 1;
+      grid-column: 1 / span 2;
+      min-height: 4px;
+    }
+
+    .cm-actual-banner {
+      grid-row: 1;
+      grid-column: 3 / span 2;
+      align-self: center;
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+    }
+
+    .cm-corner-pred {
+      grid-row: 2;
+      grid-column: 1;
+      min-height: 6px;
+    }
+
+    .cm-corner-row {
+      grid-row: 2;
+      grid-column: 2;
+      min-height: 6px;
+    }
+
+    .cm-col-head,
+    .cm-row-head {
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.74rem;
+      color: var(--text);
+      padding: 6px 4px;
+      border-radius: 8px;
+      background: var(--surface-soft);
+      border: 1px dashed var(--border);
+    }
+
+    .cm-row-head {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.25;
+    }
+
+    .cm-col-head--pos {
+      grid-row: 2;
+      grid-column: 3;
+    }
+
+    .cm-col-head--neg {
+      grid-row: 2;
+      grid-column: 4;
+    }
+
+    .cm-predicted-side {
+      grid-row: 3 / span 2;
+      grid-column: 1;
+      position: relative;
+      padding: 6px 2px;
+      border-radius: 8px;
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      min-width: 0;
+      overflow: visible;
+    }
+
+    .cm-predicted-text {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-90deg);
+      font-weight: 700;
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .cm-row-head--pos {
+      grid-row: 3;
+      grid-column: 2;
+    }
+
+    .cm-row-head--neg {
+      grid-row: 4;
+      grid-column: 2;
+    }
+
+    .cm-cell-slot-tp {
+      grid-row: 3;
+      grid-column: 3;
+    }
+
+    .cm-cell-slot-fp {
+      grid-row: 3;
+      grid-column: 4;
+    }
+
+    .cm-cell-slot-fn {
+      grid-row: 4;
+      grid-column: 3;
+    }
+
+    .cm-cell-slot-tn {
+      grid-row: 4;
+      grid-column: 4;
+    }
+
+    .cm-row-head-label {
+      font-weight: 700;
+      font-size: 0.74rem;
+      color: var(--text);
+    }
+
+    .cm-cell {
+      border-radius: 10px;
+      padding: 10px 8px;
+      border: 1px solid transparent;
+      text-align: center;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .cm-cell-label {
+      display: block;
+      font-weight: 800;
+      font-size: 0.74rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 4px;
+    }
+
+    .cm-cell-value {
+      display: block;
+      font-size: 1.15rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .cm-cell--tp {
+      background: #ecfdf3;
+      border-color: rgba(21, 128, 61, 0.35);
+    }
+
+    body.dark-theme .cm-cell--tp {
+      background: #052e1b;
+      border-color: rgba(134, 239, 172, 0.28);
+    }
+
+    .cm-cell--tn {
+      background: #f0fdf4;
+      border-color: rgba(21, 128, 61, 0.22);
+    }
+
+    body.dark-theme .cm-cell--tn {
+      background: rgba(5, 46, 27, 0.55);
+      border-color: rgba(134, 239, 172, 0.18);
+    }
+
+    .cm-cell--fp {
+      background: #fff1f1;
+      border-color: rgba(220, 38, 38, 0.35);
+    }
+
+    body.dark-theme .cm-cell--fp {
+      background: #3f1d1d;
+      border-color: rgba(248, 113, 113, 0.32);
+    }
+
+    .cm-cell--fn {
+      background: #fffbeb;
+      border-color: rgba(217, 119, 6, 0.32);
+    }
+
+    body.dark-theme .cm-cell--fn {
+      background: rgba(120, 53, 15, 0.45);
+      border-color: rgba(251, 191, 36, 0.25);
+    }
+
+    .cm-legend {
+      margin: 10px 0 0;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border);
+      display: grid;
+      gap: 6px;
+    }
+
+    .cm-legend-line {
+      margin: 0;
+      font-size: 0.68rem;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    .cm-legend-line code {
+      font-family: inherit;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .cm-stale-note {
+      margin: 0 0 8px;
+      font-size: 0.7rem;
+      color: var(--muted);
+      line-height: 1.35;
+    }
+
+    @media (max-width: 520px) {
+      .cm-matrix-grid {
+        grid-template-columns: minmax(22px, 0.3fr) minmax(42px, 0.62fr) 1fr 1fr;
+        gap: 4px;
+      }
+
+      .cm-matrix-title {
+        font-size: 0.82rem;
+      }
+
+      .cm-cell {
+        padding: 8px 4px;
+      }
+
+      .cm-cell-value {
+        font-size: 1rem;
+      }
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .stat-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+      padding: 10px;
+    }
+
+    .stat-label {
+      margin: 0 0 4px;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .stat-value {
+      margin: 0;
+      color: var(--text);
+      font-size: 1.05rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+    }
+
+    .stat-note {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .quick-mrr-panel {
+      border: 1px solid #c7d2fe;
+      background: linear-gradient(180deg, var(--accent-soft) 0%, var(--surface) 72%);
+    }
+
+    .quick-mrr-results {
+      margin-top: 12px;
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      background: var(--surface-soft);
+      padding: 10px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .quick-mrr-line {
+      margin: 0;
+      font-size: 0.86rem;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      font-feature-settings: "tnum" 1;
+      word-break: break-word;
+    }
+
+    .quick-mrr-line strong {
+      color: var(--text);
+      margin-right: 6px;
+    }
+
+    .chart-wrap {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px;
+      background: var(--surface-soft);
+    }
+
+    #mrrChart {
+      width: 100%;
+      height: 240px;
+      display: block;
+    }
+
+    .chart-shell {
+      position: relative;
+    }
+
+    .chart-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 16px;
+      margin-bottom: 8px;
+      font-size: 0.74rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .chart-controls label {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .chart-controls input {
+      accent-color: var(--accent-strong);
+      width: 14px;
+      height: 14px;
+      margin: 0;
+    }
+
+    .chart-tooltip {
+      position: absolute;
+      z-index: 6;
+      display: none;
+      min-width: 160px;
+      max-width: 280px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.74rem;
+      line-height: 1.38;
+      box-shadow: var(--shadow-md);
+      pointer-events: none;
+      transition: opacity 0.08s ease;
+    }
+
+    .chart-tooltip-row {
+      margin: 2px 0;
+    }
+
+    .chart-tooltip-row strong {
+      color: var(--muted);
+      font-weight: 600;
+      margin-right: 4px;
+    }
+
+    body.dark-theme .chart-tooltip {
+      background: var(--surface);
+    }
+
+    .chart-legend-row {
+      gap: 6px;
+      cursor: pointer;
+      user-select: none;
+      padding: 4px 8px;
+    }
+
+    .chart-legend-row input {
+      margin: 0;
+      accent-color: var(--accent-strong);
+      cursor: pointer;
+    }
+
+    .chart-legend-name {
+      font-size: 0.82rem;
+      color: var(--text);
+    }
+
+    .history-filters {
+      display: grid;
+      grid-template-columns: 1fr 220px;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      margin-top: 10px;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: var(--surface);
+    }
+
+    .legend-color {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      display: inline-block;
+      border: 1px solid rgba(15, 23, 42, 0.16);
+    }
+
+    .delete-entry-btn {
+      background: #ef4444;
+      color: #ffffff;
+      padding: 7px 10px;
+      font-size: 0.79rem;
+      border-radius: 8px;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0.6;
+        transform: translateY(3px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 860px) {
+      .container {
+        width: min(100% - 24px, 900px);
+        margin-top: 20px;
+      }
+
+      .input-grid,
+      .metrics-grid,
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .history-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .history-filters {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .container {
+        margin-bottom: 32px;
+      }
+
+      .header,
+      .panel {
+        padding: 16px;
+      }
+
+      .theme-toggle {
+        top: 10px;
+        right: 10px;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+
+      .actions button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <section class="header">
+      <h1>AI Metrics Calculator</h1>
+      <p class="subtitle">Professional quality metrics dashboard for search evaluation</p>
+      <button id="themeToggleBtn" class="theme-toggle" type="button" aria-label="Переключить тему" title="Переключить тему">
+        <svg class="theme-toggle-icon icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M20 14.5A8.5 8.5 0 1 1 11.5 6a6.5 6.5 0 0 0 8.5 8.5z"></path>
+        </svg>
+        <svg class="theme-toggle-icon icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2.5M12 19.5V22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M2 12h2.5M19.5 12H22M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"></path>
+        </svg>
+      </button>
+    </section>
+
+    <section class="layout">
+      <article class="panel">
+        <h2>Input Panel</h2>
+        <p class="panel-subtitle">Введите значения для расчета основных метрик качества поиска.</p>
+        <div class="input-grid">
+          <div class="field">
+            <label for="tp">TP
+              <span class="hint" title="True Positives: relevant results correctly retrieved">i</span>
+            </label>
+            <div class="number-wrap">
+              <input id="tp" type="number" min="0" step="1" value="0" placeholder="e.g. 24" />
+              <div class="spin-controls" aria-hidden="true">
+                <button class="spin-btn spin-up" type="button" data-target="tp" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 2 1.8 6h6.4L5 2z"></path></svg></button>
+                <button class="spin-btn spin-down" type="button" data-target="tp" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 8 1.8 4h6.4L5 8z"></path></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="fp">FP
+              <span class="hint" title="False Positives: non-relevant results retrieved">i</span>
+            </label>
+            <div class="number-wrap">
+              <input id="fp" type="number" min="0" step="1" value="0" placeholder="e.g. 8" />
+              <div class="spin-controls" aria-hidden="true">
+                <button class="spin-btn spin-up" type="button" data-target="fp" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 2 1.8 6h6.4L5 2z"></path></svg></button>
+                <button class="spin-btn spin-down" type="button" data-target="fp" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 8 1.8 4h6.4L5 8z"></path></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="fn">FN
+              <span class="hint" title="False Negatives: relevant results missed by retrieval">i</span>
+            </label>
+            <div class="number-wrap">
+              <input id="fn" type="number" min="0" step="1" value="0" placeholder="e.g. 6" />
+              <div class="spin-controls" aria-hidden="true">
+                <button class="spin-btn spin-up" type="button" data-target="fn" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 2 1.8 6h6.4L5 2z"></path></svg></button>
+                <button class="spin-btn spin-down" type="button" data-target="fn" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 8 1.8 4h6.4L5 8z"></path></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="tn">TN
+              <span class="hint" title="True Negatives: non-relevant results correctly not retrieved">i</span>
+            </label>
+            <div class="number-wrap">
+              <input id="tn" type="number" min="0" step="1" value="0" placeholder="e.g. 40" />
+              <div class="spin-controls" aria-hidden="true">
+                <button class="spin-btn spin-up" type="button" data-target="tn" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 2 1.8 6h6.4L5 2z"></path></svg></button>
+                <button class="spin-btn spin-down" type="button" data-target="tn" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 8 1.8 4h6.4L5 8z"></path></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="k">K
+              <span class="hint" title="Cutoff level for @K metrics (display-only context)">i</span>
+            </label>
+            <div class="number-wrap">
+              <input id="k" type="number" min="0" step="1" value="0" placeholder="e.g. 10" />
+              <div class="spin-controls" aria-hidden="true">
+                <button class="spin-btn spin-up" type="button" data-target="k" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 2 1.8 6h6.4L5 2z"></path></svg></button>
+                <button class="spin-btn spin-down" type="button" data-target="k" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 8 1.8 4h6.4L5 8z"></path></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="rank">First relevant rank
+              <span class="hint" title="Position of first relevant result for one query (0 if none)">i</span>
+            </label>
+            <div class="number-wrap">
+              <input id="rank" type="number" min="0" step="1" value="0" placeholder="e.g. 3" />
+              <div class="spin-controls" aria-hidden="true">
+                <button class="spin-btn spin-up" type="button" data-target="rank" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 2 1.8 6h6.4L5 2z"></path></svg></button>
+                <button class="spin-btn spin-down" type="button" data-target="rank" tabindex="-1"><svg viewBox="0 0 10 10"><path d="M5 8 1.8 4h6.4L5 8z"></path></svg></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="model">Model
+              <span class="hint" title="Optional model name for run context">i</span>
+            </label>
+            <input id="model" type="text" placeholder="e.g. gpt-4o" />
+          </div>
+
+          <div class="field">
+            <label for="promptName">Prompt name
+              <span class="hint" title="Optional prompt identifier">i</span>
+            </label>
+            <input id="promptName" type="text" placeholder="e.g. Turing facts v1" />
+          </div>
+        </div>
+        <div id="error" class="error"></div>
+        <div class="actions">
+          <button id="calculateBtn" type="button">Рассчитать</button>
+          <button id="clearBtn" type="button">Очистить</button>
+          <button id="randomInputBtn" type="button" title="Случайные допустимые значения полей ввода">Random</button>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Metrics Dashboard</h2>
+        <p class="panel-subtitle">Актуальные показатели вычисляются на основе текущих входных данных.</p>
+        <div class="metrics-grid">
+          <div class="metric-card positive">
+            <p class="metric-title">Accuracy</p>
+            <p class="metric-tip">Доля корректных решений среди всех случаев.</p>
+            <div class="formula">Accuracy = (TP + TN) / (TP + TN + FP + FN)</div>
+            <div id="accuracyValue" class="value">0.00</div>
+            <div id="accuracyMeta" class="subvalue">TP = 0, TN = 0, FP = 0, FN = 0</div>
+          </div>
+
+          <div class="metric-card positive">
+            <p class="metric-title">Precision@K</p>
+            <p class="metric-tip">Доля <strong>действительно релевантных</strong> элементов среди всех найденных (чистота выдачи).</p>
+            <div class="formula">Precision = TP / (TP + FP)</div>
+            <div id="precisionValue" class="value">0.00</div>
+            <div id="precisionMeta" class="subvalue">K = 0</div>
+          </div>
+
+          <div class="metric-card positive">
+            <p class="metric-title">Recall@K</p>
+            <p class="metric-tip">Доля найденных релевантных элементов среди <strong>всех существующих</strong> (полнота охвата).</p>
+            <div class="formula">Recall = TP / (TP + FN)</div>
+            <div id="recallValue" class="value">0.00</div>
+            <div id="recallMeta" class="subvalue">K = 0</div>
+          </div>
+
+          <div class="metric-card positive">
+            <p class="metric-title">F1 Score</p>
+            <p class="metric-tip">Гармоническое среднее между Precision и Recall, отражающее <strong>баланс</strong> качества.</p>
+            <div class="formula">F1 = 2 * (P * R) / (P + R)</div>
+            <div id="f1Value" class="value">0.00</div>
+            <div id="f1Meta" class="subvalue">P = 0.00, R = 0.00</div>
+          </div>
+
+          <div class="metric-card positive">
+            <p class="metric-title">Reciprocal Rank (RR)</p>
+            <p class="metric-tip">Обратная величина ранга <strong>первого найденного</strong> релевантного элемента (скорость успеха для одного запроса).</p>
+            <div class="formula">RR = 1 / rank</div>
+            <div id="rrValue" class="value">0.00</div>
+            <div id="rrMeta" class="subvalue">rank = 0</div>
+          </div>
+
+          <div class="metric-card positive" style="grid-column: 1 / -1;">
+            <p class="metric-title">Mean Reciprocal Rank (MRR)</p>
+            <p class="metric-tip">Среднее значение RR по всем тестовым запросам, оценивающее <strong>общую скорость ранжирования</strong>.</p>
+            <div class="formula">MRR = (1 / N) * Σ (1 / rank_i), rank_i = 0 → RR_i = 0</div>
+            <div id="mrrValue" class="value">0.00</div>
+            <div id="mrrMeta" class="subvalue">По всем run: 0.00</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="history-header">
+          <h2>История расчетов</h2>
+          <div class="history-header-actions">
+            <label class="history-toggle" title="Показать или скрыть список истории">
+              <input id="historyVisibleToggle" type="checkbox" checked />
+              <span class="history-toggle-track"><span class="history-toggle-thumb"></span></span>
+              <span>История</span>
+            </label>
+            <button id="clearHistoryBtn" class="secondary" type="button">Очистить историю</button>
+          </div>
+        </div>
+        <div id="historyPanelBody" class="history-panel-body">
+          <div class="history-filters">
+            <input id="historySearchInput" type="text" placeholder="Поиск по model / prompt / дате" />
+            <input id="historyModelFilterInput" type="text" placeholder="Фильтр по model" />
+          </div>
+          <div id="historyList" class="history-list">
+            <p class="history-empty">История пока пуста.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Статистика</h2>
+        <p class="panel-subtitle">Агрегированные показатели по сохраненным запускам.</p>
+        <div id="statsGrid" class="stats-grid">
+          <div class="stat-card">
+            <p class="stat-label">Средний Precision</p>
+            <p id="avgPrecisionValue" class="stat-value">0.00</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">Средний Recall</p>
+            <p id="avgRecallValue" class="stat-value">0.00</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">MRR (все run)</p>
+            <p id="avgMrrValue" class="stat-value">0.00</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">MRR (отфильтрованные run)</p>
+            <p id="filteredMrrValue" class="stat-value">0.00</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">Лучший run (по RR)</p>
+            <p id="bestRunValue" class="stat-note">-</p>
+          </div>
+          <div class="stat-card">
+            <p class="stat-label">Худший run (по RR)</p>
+            <p id="worstRunValue" class="stat-note">-</p>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <div class="chart-controls" id="chartControls">
+            <label><input id="chartOptGrid" type="checkbox" checked /> Показать сетку</label>
+            <label><input id="chartOptAvgLine" type="checkbox" checked /> Показать среднюю линию</label>
+            <label><input id="chartOptPoints" type="checkbox" checked /> Показать точки</label>
+            <label><input id="chartOptTooltip" type="checkbox" checked /> Показать tooltip</label>
+          </div>
+          <div class="chart-shell" id="chartCanvasShell">
+            <canvas id="mrrChart" width="800" height="240"></canvas>
+            <div id="chartTooltip" class="chart-tooltip" role="tooltip" aria-live="polite"></div>
+          </div>
+          <div id="chartLegend" class="chart-legend"></div>
+        </div>
+      </article>
+
+      <article class="panel quick-mrr-panel">
+        <h2>Quick MRR Calculator</h2>
+        <p class="panel-subtitle">Sandbox-инструмент для быстрого расчета MRR по списку рангов.</p>
+        <div class="field">
+          <label for="quickMrrRanks">Ranks (через запятую)</label>
+          <input id="quickMrrRanks" type="text" placeholder="пример: 1,4,3,0" />
+        </div>
+        <div class="quick-mrr-results">
+          <p id="quickMrrRrList" class="quick-mrr-line"><strong>RR list:</strong> -</p>
+          <p id="quickMrrValue" class="quick-mrr-line"><strong>MRR:</strong> -</p>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      function initApp() {
+      var tpInput = document.getElementById("tp");
+      var fpInput = document.getElementById("fp");
+      var fnInput = document.getElementById("fn");
+      var tnInput = document.getElementById("tn");
+      var kInput = document.getElementById("k");
+      var rankInput = document.getElementById("rank");
+      var modelInput = document.getElementById("model");
+      var promptNameInput = document.getElementById("promptName");
+      var calculateBtn = document.getElementById("calculateBtn");
+      var clearBtn = document.getElementById("clearBtn");
+      var randomInputBtn = document.getElementById("randomInputBtn");
+      var themeToggleBtn = document.getElementById("themeToggleBtn");
+      var clearHistoryBtn = document.getElementById("clearHistoryBtn");
+      var historyVisibleToggle = document.getElementById("historyVisibleToggle");
+      var historyPanelBody = document.getElementById("historyPanelBody");
+      var historyList = document.getElementById("historyList");
+      var historySearchInput = document.getElementById("historySearchInput");
+      var historyModelFilterInput = document.getElementById("historyModelFilterInput");
+      var avgPrecisionValue = document.getElementById("avgPrecisionValue");
+      var avgRecallValue = document.getElementById("avgRecallValue");
+      var avgMrrValue = document.getElementById("avgMrrValue");
+      var filteredMrrValue = document.getElementById("filteredMrrValue");
+      var bestRunValue = document.getElementById("bestRunValue");
+      var worstRunValue = document.getElementById("worstRunValue");
+      var mrrChart = document.getElementById("mrrChart");
+      var chartLegend = document.getElementById("chartLegend");
+      var chartCanvasShell = document.getElementById("chartCanvasShell");
+      var chartTooltip = document.getElementById("chartTooltip");
+      var chartOptGrid = document.getElementById("chartOptGrid");
+      var chartOptAvgLine = document.getElementById("chartOptAvgLine");
+      var chartOptPoints = document.getElementById("chartOptPoints");
+      var chartOptTooltip = document.getElementById("chartOptTooltip");
+
+      var chartHiddenModels = {};
+      var chartHitPoints = [];
+      var cachedRuns = null;
+      var lastChartSignature = "";
+      var chartStyleCache = null;
+      var chartMouseRaf = 0;
+      var pendingChartMouseEvent = null;
+
+      function isModelHiddenForChart(model) {
+        var key = normalizeModelName(model);
+        return chartHiddenModels[key] === true;
+      }
+
+      function readChartOpts() {
+        return {
+          grid: chartOptGrid ? chartOptGrid.checked : true,
+          avgLine: chartOptAvgLine ? chartOptAvgLine.checked : true,
+          points: chartOptPoints ? chartOptPoints.checked : true,
+          tooltip: chartOptTooltip ? chartOptTooltip.checked : true
+        };
+      }
+
+      function hideChartTooltip() {
+        if (!chartTooltip) return;
+        chartTooltip.style.display = "none";
+        chartTooltip.innerHTML = "";
+      }
+
+      function debounce(fn, waitMs) {
+        var timer = 0;
+        return function () {
+          var args = arguments;
+          clearTimeout(timer);
+          timer = setTimeout(function () {
+            fn.apply(null, args);
+          }, waitMs);
+        };
+      }
+
+      function redrawFilteredChart() {
+        renderMrrChart(filterRuns(readRuns()));
+      }
+
+      var errorEl = document.getElementById("error");
+      var quickMrrRanksInput = document.getElementById("quickMrrRanks");
+      var quickMrrRrList = document.getElementById("quickMrrRrList");
+      var quickMrrValue = document.getElementById("quickMrrValue");
+      var RUNS_KEY = "metrics_runs";
+      var RUNS_LIMIT = 30;
+      var THEME_KEY = "metrics_theme";
+      var HISTORY_PANEL_VISIBLE_KEY = "metrics_history_panel_visible";
+
+      var precisionValue = document.getElementById("precisionValue");
+      var recallValue = document.getElementById("recallValue");
+      var f1Value = document.getElementById("f1Value");
+      var accuracyValue = document.getElementById("accuracyValue");
+      var rrValue = document.getElementById("rrValue");
+      var mrrValue = document.getElementById("mrrValue");
+
+      var precisionMeta = document.getElementById("precisionMeta");
+      var recallMeta = document.getElementById("recallMeta");
+      var f1Meta = document.getElementById("f1Meta");
+      var accuracyMeta = document.getElementById("accuracyMeta");
+      var rrMeta = document.getElementById("rrMeta");
+      var mrrMeta = document.getElementById("mrrMeta");
+
+      function toNonNegativeInt(inputEl) {
+        var value = Number(inputEl.value);
+        if (!Number.isFinite(value) || value < 0) {
+          return 0;
+        }
+        return Math.floor(value);
+      }
+
+      function round2(num) {
+        return Number(num).toFixed(2);
+      }
+
+      function randomIntInclusive(min, max) {
+        return min + Math.floor(Math.random() * (max - min + 1));
+      }
+
+      function randomizeInputs() {
+        tpInput.value = String(randomIntInclusive(0, 80));
+        fpInput.value = String(randomIntInclusive(0, 50));
+        fnInput.value = String(randomIntInclusive(0, 40));
+        tnInput.value = String(randomIntInclusive(0, 120));
+        kInput.value = String(randomIntInclusive(0, 30));
+        if (Math.random() < 0.22) {
+          rankInput.value = "0";
+        } else {
+          rankInput.value = String(randomIntInclusive(1, 15));
+        }
+        errorEl.textContent = "";
+        calculate();
+      }
+
+      function formatDate(date) {
+        var y = date.getFullYear();
+        var m = String(date.getMonth() + 1).padStart(2, "0");
+        var d = String(date.getDate()).padStart(2, "0");
+        var h = String(date.getHours()).padStart(2, "0");
+        var mm = String(date.getMinutes()).padStart(2, "0");
+        return y + "-" + m + "-" + d + " " + h + ":" + mm;
+      }
+
+      function safeDivide(numerator, denominator) {
+        if (denominator === 0) return 0;
+        return numerator / denominator;
+      }
+
+      function validateAndNormalizeInputs() {
+        var tp = toNonNegativeInt(tpInput);
+        var fp = toNonNegativeInt(fpInput);
+        var fn = toNonNegativeInt(fnInput);
+        var tn = toNonNegativeInt(tnInput);
+        var k = toNonNegativeInt(kInput);
+        var rank = toNonNegativeInt(rankInput);
+
+        tpInput.value = String(tp);
+        fpInput.value = String(fp);
+        fnInput.value = String(fn);
+        tnInput.value = String(tn);
+        kInput.value = String(k);
+        rankInput.value = String(rank);
+        errorEl.textContent = "";
+
+        return { tp: tp, fp: fp, fn: fn, tn: tn, k: k, rank: rank };
+      }
+
+      function calculate() {
+        var data = validateAndNormalizeInputs();
+
+        var precision = safeDivide(data.tp, data.tp + data.fp);
+        var recall = safeDivide(data.tp, data.tp + data.fn);
+        var f1 = safeDivide(2 * precision * recall, precision + recall);
+        var accuracy = safeDivide(data.tp + data.tn, data.tp + data.tn + data.fp + data.fn);
+        var rr = data.rank > 0 ? 1 / data.rank : 0;
+        var allRuns = readRuns();
+        var filteredRuns = filterRuns(allRuns);
+        var allMrr = computeMrrFromRuns(allRuns);
+        var filteredMrr = computeMrrFromRuns(filteredRuns);
+
+        precisionValue.textContent = round2(precision);
+        recallValue.textContent = round2(recall);
+        f1Value.textContent = round2(f1);
+        accuracyValue.textContent = round2(accuracy);
+        rrValue.textContent = round2(rr);
+        mrrValue.textContent = round2(allMrr);
+
+        precisionMeta.textContent = "K = " + data.k;
+        recallMeta.textContent = "K = " + data.k;
+        f1Meta.textContent = "P = " + round2(precision) + ", R = " + round2(recall);
+        accuracyMeta.textContent = "TP = " + data.tp + ", TN = " + data.tn + ", FP = " + data.fp + ", FN = " + data.fn;
+        rrMeta.textContent = "rank = " + data.rank;
+        mrrMeta.textContent = "По всем run: " + round2(allMrr) + " | По фильтру: " + round2(filteredMrr);
+
+        window.metricsData = {
+          input: {
+            tp: data.tp,
+            fp: data.fp,
+            fn: data.fn,
+            tn: data.tn,
+            rank: data.rank
+          },
+          metrics: {
+            precision: precision,
+            recall: recall,
+            f1: f1,
+            accuracy: accuracy,
+            rr: rr
+          }
+        };
+      }
+
+      function parseRunsSafe(raw) {
+        if (!raw || typeof raw !== "string") return [];
+        if (raw.length > 2 * 1024 * 1024) return [];
+        try {
+          var parsed = JSON.parse(raw);
+          return Array.isArray(parsed) ? parsed : [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function readRuns() {
+        if (cachedRuns) return cachedRuns.slice();
+        var raw = localStorage.getItem(RUNS_KEY);
+        cachedRuns = parseRunsSafe(raw).slice(0, RUNS_LIMIT);
+        return cachedRuns.slice();
+      }
+
+      function writeRuns(runs) {
+        var limited = Array.isArray(runs) ? runs.slice(0, RUNS_LIMIT) : [];
+        cachedRuns = limited.slice();
+        localStorage.setItem(RUNS_KEY, JSON.stringify(limited));
+      }
+
+      function getRunRr(run) {
+        var metrics = run && run.metrics ? run.metrics : {};
+        var rr = Number(metrics.rr);
+        if (Number.isFinite(rr)) return rr;
+        var input = run && run.input ? run.input : {};
+        var rank = Number(input.rank);
+        if (!Number.isFinite(rank) || rank <= 0) return 0;
+        return 1 / rank;
+      }
+
+      function computeMrrFromRuns(runs) {
+        if (!Array.isArray(runs) || runs.length === 0) return 0;
+        var total = runs.reduce(function (sum, run) {
+          return sum + getRunRr(run);
+        }, 0);
+        return total / runs.length;
+      }
+
+      function hasActiveFilters() {
+        var q = String(historySearchInput.value || "").trim();
+        var model = String(historyModelFilterInput.value || "").trim();
+        return q.length > 0 || model.length > 0;
+      }
+
+      function parseQuickMrrRanks(raw) {
+        var trimmed = String(raw || "").trim();
+        if (!trimmed) return [];
+        var parts = trimmed.split(",");
+        var values = [];
+        for (var i = 0; i < parts.length; i += 1) {
+          var token = parts[i].trim();
+          if (!token) return null;
+          var rank = Number(token);
+          if (!Number.isFinite(rank) || rank < 0) return null;
+          values.push(rank);
+        }
+        return values;
+      }
+
+      function calculateQuickMrr() {
+        if (!quickMrrRanksInput || !quickMrrRrList || !quickMrrValue) return;
+        var parsedRanks = parseQuickMrrRanks(quickMrrRanksInput.value);
+        if (parsedRanks === null) {
+          quickMrrRrList.innerHTML = "<strong>RR list:</strong> Invalid input";
+          quickMrrValue.innerHTML = "<strong>MRR:</strong> Invalid input";
+          return;
+        }
+        if (parsedRanks.length === 0) {
+          quickMrrRrList.innerHTML = "<strong>RR list:</strong> -";
+          quickMrrValue.innerHTML = "<strong>MRR:</strong> -";
+          return;
+        }
+
+        var rrList = parsedRanks.map(function (rank) {
+          return rank > 0 ? 1 / rank : 0;
+        });
+        var rrText = rrList.map(function (rr) {
+          return round2(rr);
+        }).join(", ");
+        var mrr = rrList.reduce(function (sum, rr) {
+          return sum + rr;
+        }, 0) / rrList.length;
+
+        quickMrrRrList.innerHTML = "<strong>RR list:</strong> [" + rrText + "]";
+        quickMrrValue.innerHTML = "<strong>MRR:</strong> " + round2(mrr);
+      }
+
+      function normalizeModelName(name) {
+        var normalized = String(name || "").trim();
+        return normalized || "unknown";
+      }
+
+      function modelHueSalt(modelName) {
+        var salt = 0;
+        var s = String(modelName || "");
+        for (var si = 0; si < s.length; si += 1) {
+          salt = (salt * 131 + s.charCodeAt(si)) >>> 0;
+        }
+        return salt % 360;
+      }
+
+      function getColorForModel(modelName, seriesIndex, seriesCount) {
+        var idx =
+          typeof seriesIndex === "number" && Number.isFinite(seriesIndex)
+            ? Math.max(0, Math.floor(seriesIndex))
+            : 0;
+        var cnt =
+          typeof seriesCount === "number" &&
+          Number.isFinite(seriesCount) &&
+          seriesCount >= 1
+            ? Math.max(1, Math.floor(seriesCount))
+            : 1;
+        var isDark = document.body.classList.contains("dark-theme");
+        var salt = modelHueSalt(modelName);
+        var step = 360 / cnt;
+        var hue = ((idx * step + salt * 11.517) % 360 + 360) % 360;
+        var sat = isDark ? 72 : 68;
+        var light = isDark ? 64 : 50;
+        return "hsl(" + hue.toFixed(2) + ", " + sat + "%, " + light + "%)";
+      }
+
+      function filterRuns(runs) {
+        var q = String(historySearchInput.value || "").trim().toLowerCase();
+        var modelFilter = String(historyModelFilterInput.value || "").trim().toLowerCase();
+        return runs.filter(function (run) {
+          var context = run.context || {};
+          var model = String(context.model || "").toLowerCase();
+          var prompt = String(context.promptName || "").toLowerCase();
+          var date = String(run.date || "").toLowerCase();
+          var matchQ = !q || model.indexOf(q) !== -1 || prompt.indexOf(q) !== -1 || date.indexOf(q) !== -1;
+          var matchModel = !modelFilter || model.indexOf(modelFilter) !== -1;
+          return matchQ && matchModel;
+        });
+      }
+
+      function renderLegend(modelColors) {
+        if (!chartLegend) return;
+        var models = Object.keys(modelColors).sort(function (a, b) {
+          return a.localeCompare(b);
+        });
+        if (models.length === 0) {
+          chartLegend.innerHTML = "<span class='history-empty'>Нет данных для легенды.</span>";
+          return;
+        }
+        chartLegend.innerHTML = models.map(function (model) {
+          var color = modelColors[model];
+          var encoded = encodeURIComponent(model);
+          var checked = !isModelHiddenForChart(model);
+          return (
+            "<label class='legend-item chart-legend-row'>" +
+              "<input type='checkbox' class='chart-model-cb' data-model='" + encoded + "' " + (checked ? "checked" : "") + " />" +
+              "<span class='legend-color' style='background:" + color + ";'></span>" +
+              "<span class='chart-legend-name'>" + escapeHtml(model) + "</span>" +
+            "</label>"
+          );
+        }).join("");
+      }
+
+      function formatDeltaLine(delta) {
+        if (delta === null || delta === undefined || Number.isNaN(Number(delta))) return "";
+        var d = Number(delta);
+        var arrow = d >= 0 ? "↑" : "↓";
+        return (d >= 0 ? "+" : "") + round2(d) + " " + arrow;
+      }
+
+      function pointerToChart(ev) {
+        if (!chartCanvasShell) return { mx: 0, my: 0 };
+        var rect = chartCanvasShell.getBoundingClientRect();
+        return { mx: ev.clientX - rect.left, my: ev.clientY - rect.top };
+      }
+
+      function showChartTooltip(h, ev, opts) {
+        if (!chartTooltip || !opts.tooltip) return;
+        var scenario = "";
+        var ctxRaw = (h.run && h.run.context) ? h.run.context : {};
+        if (typeof ctxRaw.scenario === "string" && ctxRaw.scenario.trim())
+          scenario = ctxRaw.scenario.trim();
+        else if (typeof ctxRaw.promptName === "string") scenario = ctxRaw.promptName.trim();
+        else if (typeof ctxRaw.notes === "string") scenario = ctxRaw.notes.trim();
+
+        var parts = [];
+        parts.push("<div class='chart-tooltip-row'><strong>Model:</strong> " + escapeHtml(h.model) + "</div>");
+        if (scenario)
+          parts.push("<div class='chart-tooltip-row'><strong>Scenario:</strong> " + escapeHtml(scenario) + "</div>");
+        parts.push("<div class='chart-tooltip-row'><strong>Run #:</strong> " + escapeHtml(String(h.idx + 1)) + "</div>");
+        parts.push("<div class='chart-tooltip-row'><strong>RR:</strong> " + round2(h.rr) + "</div>");
+        parts.push("<div class='chart-tooltip-row'><strong>MRR:</strong> " + round2(h.cumMrr) + "</div>");
+        if (h.run && h.run.date)
+          parts.push("<div class='chart-tooltip-row'><strong>Дата:</strong> " + escapeHtml(String(h.run.date)) + "</div>");
+        var deltaFormatted = formatDeltaLine(h.deltaPrevChrono);
+        if (deltaFormatted)
+          parts.push("<div class='chart-tooltip-row'><strong>Δ (от пред.):</strong> " + escapeHtml(deltaFormatted) + "</div>");
+
+        chartTooltip.innerHTML = parts.join("");
+        chartTooltip.style.display = "block";
+        chartTooltip.offsetWidth;
+        var rect = chartCanvasShell.getBoundingClientRect();
+        var pad = 10;
+        var tw = chartTooltip.offsetWidth || 200;
+        var th = chartTooltip.offsetHeight || 80;
+        var mx = pointerToChart(ev).mx + 14;
+        var my = pointerToChart(ev).my + 14;
+        if (mx + tw > rect.width - pad) mx = rect.width - tw - pad;
+        if (mx < pad) mx = pad;
+        if (my + th > rect.height - pad) my = rect.height - th - pad;
+        if (my < pad) my = pad;
+        chartTooltip.style.left = mx + "px";
+        chartTooltip.style.top = my + "px";
+      }
+
+      function canvasPointerNormalized(ev) {
+        if (!mrrChart) return { mx: 0, my: 0 };
+        var b = mrrChart.getBoundingClientRect();
+        var bw = Math.max(b.width, 1);
+        var bh = Math.max(b.height, 1);
+        return {
+          mx: ((ev.clientX - b.left) / bw) * mrrChart.width,
+          my: ((ev.clientY - b.top) / bh) * mrrChart.height
+        };
+      }
+
+      function clearMrrChartSurface() {
+        chartHitPoints = [];
+        hideChartTooltip();
+        if (!mrrChart) return;
+        var ctx = mrrChart.getContext("2d");
+        if (!ctx) return;
+        ctx.clearRect(0, 0, mrrChart.width, mrrChart.height);
+        renderLegend({});
+        lastChartSignature = "empty";
+      }
+
+      function getChartStyleCache() {
+        var themeKey = document.body.classList.contains("dark-theme") ? "dark" : "light";
+        if (chartStyleCache && chartStyleCache.themeKey === themeKey) return chartStyleCache;
+        chartStyleCache = {
+          themeKey: themeKey,
+          axisMuted: getComputedStyle(document.body).getPropertyValue("--muted").trim() || "#64748b",
+          axisText: getComputedStyle(document.body).getPropertyValue("--text").trim() || "#1e293b",
+          gridColor: themeKey === "dark" ? "rgba(255,255,255,0.068)" : "rgba(0,0,0,0.055)"
+        };
+        return chartStyleCache;
+      }
+
+      function renderMrrChart(runs) {
+        chartHitPoints = [];
+        hideChartTooltip();
+
+        if (!mrrChart) return;
+        if (chartCanvasShell) {
+          var cw = Math.max(280, Math.floor(chartCanvasShell.clientWidth));
+          if (Math.abs(mrrChart.width - cw) >= 2) {
+            mrrChart.width = cw;
+          }
+          mrrChart.height = 240;
+        }
+        var ctx = mrrChart.getContext("2d");
+        if (!ctx) return;
+
+        var width = mrrChart.width;
+        var height = mrrChart.height;
+        var opts = readChartOpts();
+        var themeKey = document.body.classList.contains("dark-theme") ? "dark" : "light";
+        var chartSignature = JSON.stringify({
+          runs: runs.map(function (run) {
+            var context = run.context || {};
+            return [run.id, run.date, context.model || "", getRunRr(run)];
+          }),
+          hidden: chartHiddenModels,
+          opts: opts,
+          theme: themeKey,
+          w: width,
+          h: height
+        });
+        if (chartSignature === lastChartSignature) return;
+        lastChartSignature = chartSignature;
+
+        var pad = { left: 44, right: 108, top: 28, bottom: 40 };
+        var innerW = width - pad.left - pad.right;
+        var innerH = height - pad.top - pad.bottom;
+        var xInset = 8;
+
+        var styleCache = getChartStyleCache();
+        var axisMuted = styleCache.axisMuted;
+        var axisText = styleCache.axisText;
+        var gridColor = styleCache.gridColor;
+
+        ctx.clearRect(0, 0, width, height);
+
+        if (!runs.length) {
+          renderLegend({});
+          return;
+        }
+
+        var sortedRuns = runs.slice().reverse();
+        var maxIdx = Math.max(sortedRuns.length - 1, 1);
+
+        function xAt(idx) {
+          return pad.left + xInset + (idx / maxIdx) * Math.max(innerW - 2 * xInset, 1);
+        }
+
+        function yAt(rrVal) {
+          var clamped = Math.max(0, Math.min(1, Number(rrVal)));
+          return pad.top + (1 - clamped) * innerH;
+        }
+
+        var cumRunning = [];
+        var runSum = 0;
+        for (var ci = 0; ci < sortedRuns.length; ci += 1) {
+          runSum += getRunRr(sortedRuns[ci]);
+          cumRunning.push(runSum / (ci + 1));
+        }
+
+        var modelColors = {};
+        (function assignDistinctModelColors() {
+          var seen = {};
+          sortedRuns.forEach(function (run) {
+            var mName = normalizeModelName((run.context || {}).model);
+            if (!seen[mName]) seen[mName] = true;
+          });
+          var keys = Object.keys(seen).sort(function (a, b) {
+            return a.localeCompare(b);
+          });
+          keys.forEach(function (mKey, si) {
+            modelColors[mKey] = getColorForModel(mKey, si, keys.length);
+          });
+        })();
+
+        var visibleForAvg = sortedRuns.filter(function (run) {
+          return !isModelHiddenForChart((run.context || {}).model);
+        });
+        var avgMrr = computeMrrFromRuns(
+          visibleForAvg.length ? visibleForAvg : sortedRuns
+        );
+
+        if (opts.grid) {
+          ctx.save();
+          ctx.strokeStyle = gridColor;
+          ctx.lineWidth = 1;
+          [0, 0.25, 0.5, 0.75, 1].forEach(function (gv) {
+            var gy = yAt(gv);
+            ctx.beginPath();
+            ctx.moveTo(pad.left, gy);
+            ctx.lineTo(width - pad.right, gy);
+            ctx.stroke();
+          });
+          var vStep = sortedRuns.length <= 12 ? 1 : sortedRuns.length <= 24 ? 2 : 3;
+          for (var vx = 0; vx < sortedRuns.length; vx += vStep) {
+            var x = xAt(vx);
+            ctx.beginPath();
+            ctx.moveTo(x, pad.top);
+            ctx.lineTo(x, height - pad.bottom);
+            ctx.stroke();
+          }
+          var xLast = xAt(sortedRuns.length - 1);
+          ctx.beginPath();
+          ctx.moveTo(xLast, pad.top);
+          ctx.lineTo(xLast, height - pad.bottom);
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        if (opts.avgLine && sortedRuns.length) {
+          var ay = yAt(avgMrr);
+          ctx.save();
+          ctx.strokeStyle = axisMuted;
+          ctx.globalAlpha = 0.92;
+          ctx.setLineDash([5, 4]);
+          ctx.lineWidth = 1.15;
+          ctx.beginPath();
+          ctx.moveTo(pad.left, ay);
+          ctx.lineTo(width - pad.right, ay);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.globalAlpha = 1;
+          ctx.fillStyle = axisMuted;
+          ctx.font = "11px Inter, system-ui, sans-serif";
+          ctx.textAlign = "right";
+          ctx.textBaseline = "middle";
+          ctx.fillText("Avg MRR: " + round2(avgMrr), width - 4, ay);
+          ctx.restore();
+        }
+
+        ctx.strokeStyle = axisMuted;
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.moveTo(pad.left, pad.top);
+        ctx.lineTo(pad.left, height - pad.bottom);
+        ctx.lineTo(width - pad.right, height - pad.bottom);
+        ctx.stroke();
+
+        ctx.fillStyle = axisMuted;
+        ctx.font = "11px Inter, system-ui, sans-serif";
+        ctx.textAlign = "right";
+        ctx.textBaseline = "middle";
+        [0, 0.25, 0.5, 0.75, 1].forEach(function (yv) {
+          ctx.fillText(Number(yv).toFixed(2), pad.left - 6, yAt(yv));
+        });
+
+        ctx.textAlign = "center";
+        ctx.textBaseline = "top";
+        ctx.fillStyle = axisText;
+        var xLabelStep =
+          sortedRuns.length <= 16 ? 1 : sortedRuns.length <= 30 ? 2 : 3;
+        var markedLabels = {};
+
+        function drawXLab(i, force) {
+          if (!(force || i % xLabelStep === 0 || i === 0 || i === sortedRuns.length - 1)) return;
+          if (markedLabels[i] && !force) return;
+          markedLabels[i] = true;
+          var lx = xAt(i);
+          var runMeta = sortedRuns[i];
+          var shortD = "";
+          var rawD = runMeta.date ? String(runMeta.date) : "";
+          var numMatch = rawD.match(/^(\d{4})-(\d{2})-(\d{2})/);
+          if (numMatch) shortD = numMatch[3] + "." + numMatch[2];
+          ctx.font = "10px Inter, system-ui, sans-serif";
+          ctx.fillStyle = axisMuted;
+          ctx.fillText("Run " + (i + 1), lx, height - pad.bottom + 6);
+          if (shortD)
+            ctx.fillText(shortD, lx, height - pad.bottom + 20);
+          ctx.fillStyle = axisText;
+        }
+
+        var xi;
+        for (xi = 0; xi < sortedRuns.length; xi += xLabelStep) {
+          drawXLab(xi, false);
+        }
+        drawXLab(sortedRuns.length - 1, true);
+
+        var pointsByModel = {};
+        var rrMarkers = [];
+
+        sortedRuns.forEach(function (run, idx) {
+          var model = normalizeModelName((run.context || {}).model);
+          if (isModelHiddenForChart((run.context || {}).model)) return;
+
+          var rr = getRunRr(run);
+          var x = xAt(idx);
+          var y = yAt(rr);
+
+          if (!pointsByModel[model]) pointsByModel[model] = [];
+          pointsByModel[model].push({
+            x: x,
+            y: y,
+            run: run,
+            idxChrono: idx,
+            rr: rr,
+            model: model,
+            cumMrr: cumRunning[idx]
+          });
+
+          rrMarkers.push({
+            x: x,
+            y: y,
+            rr: rr,
+            run: run,
+            idxChrono: idx,
+            cumMrr: cumRunning[idx],
+            model: model,
+            deltaPrevChrono:
+              idx > 0 ? rr - getRunRr(sortedRuns[idx - 1]) : null
+          });
+        });
+
+        Object.keys(pointsByModel).sort().forEach(function (modelKey) {
+          var pts = pointsByModel[modelKey];
+          if (!pts.length) return;
+          var stroke = modelColors[modelKey];
+          ctx.strokeStyle = stroke;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          pts.forEach(function (point, ix) {
+            if (ix === 0) ctx.moveTo(point.x, point.y);
+            else ctx.lineTo(point.x, point.y);
+          });
+          ctx.stroke();
+        });
+
+        var pointRadius = 4;
+
+        rrMarkers.forEach(function (m) {
+          chartHitPoints.push({
+            x: m.x,
+            y: m.y,
+            rr: m.rr,
+            run: m.run,
+            idx: m.idxChrono,
+            cumMrr: m.cumMrr,
+            model: m.model,
+            deltaPrevChrono: m.deltaPrevChrono
+          });
+
+          if (!opts.points) return;
+
+          var mc = modelColors[m.model] || axisMuted;
+
+          ctx.beginPath();
+          ctx.fillStyle = mc;
+          ctx.strokeStyle = mc;
+          ctx.lineWidth = 1.45;
+          ctx.arc(m.x, m.y, pointRadius, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.stroke();
+        });
+
+        ctx.save();
+        ctx.fillStyle = axisMuted;
+        ctx.font = "10px Inter, system-ui, sans-serif";
+        ctx.textAlign = "left";
+        ctx.textBaseline = "top";
+        ctx.fillText("RR", 6, 4);
+        ctx.restore();
+
+        renderLegend(modelColors);
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function getRunConfusionCounts(run) {
+        var inp = run && run.input ? run.input : {};
+
+        function ni(v) {
+          var n = Math.floor(Number(v));
+          return Number.isFinite(n) && n >= 0 ? n : 0;
+        }
+
+        var hasTriple =
+          inp.tp !== undefined &&
+          inp.fp !== undefined &&
+          inp.fn !== undefined;
+
+        var tp = hasTriple ? ni(inp.tp) : 0;
+        var fp = hasTriple ? ni(inp.fp) : 0;
+        var fn = hasTriple ? ni(inp.fn) : 0;
+
+        var totalNum =
+          inp.total !== undefined && inp.total !== null && inp.total !== ""
+            ? Number(inp.total)
+            : NaN;
+        var totalOk = Number.isFinite(totalNum) && totalNum >= 0;
+
+        var tnExplicit =
+          inp.tn !== undefined && inp.tn !== null && inp.tn !== "";
+
+        var tn;
+        if (tnExplicit) {
+          tn = ni(inp.tn);
+        } else if (totalOk && hasTriple) {
+          tn = Math.max(0, Math.floor(totalNum - tp - fp - fn));
+        } else {
+          tn = 0;
+        }
+
+        return { tp: tp, fp: fp, fn: fn, tn: tn, hasTriple: hasTriple };
+      }
+
+      function buildConfusionMatrixHtml(counts) {
+        var staleNote = counts.hasTriple
+          ? ""
+          : "<p class='cm-stale-note'>Эта запись сохранена без счётчиков TP/FP/FN (старый формат). Показаны нули для TP/FP/FN; TN вычисляется только при наличии total или сохранённого TN.</p>";
+
+        return (
+          "<div class='cm-matrix-card'>" +
+            "<p class='cm-matrix-title'>Матрица ошибок · Confusion Matrix</p>" +
+            staleNote +
+            "<div class='cm-matrix-grid' role='grid' aria-label='Confusion matrix'>" +
+              "<div class='cm-top-left-corner' aria-hidden='true'></div>" +
+              "<div class='cm-actual-banner'>Actual</div>" +
+              "<div class='cm-corner-pred' aria-hidden='true'></div>" +
+              "<div class='cm-corner-row' aria-hidden='true'></div>" +
+              "<div class='cm-col-head cm-col-head--pos'>Positive</div>" +
+              "<div class='cm-col-head cm-col-head--neg'>Negative</div>" +
+              "<div class='cm-predicted-side'><span class='cm-predicted-text'>Predicted</span></div>" +
+              "<div class='cm-row-head cm-row-head--pos'>" +
+                "<span class='cm-row-head-label'>Positive</span>" +
+              "</div>" +
+              "<div class='cm-cell cm-cell--tp cm-cell-slot-tp'>" +
+                "<span class='cm-cell-label'>TP</span><span class='cm-cell-value'>" + counts.tp + "</span>" +
+              "</div>" +
+              "<div class='cm-cell cm-cell--fp cm-cell-slot-fp'>" +
+                "<span class='cm-cell-label'>FP</span><span class='cm-cell-value'>" + counts.fp + "</span>" +
+              "</div>" +
+              "<div class='cm-row-head cm-row-head--neg'>" +
+                "<span class='cm-row-head-label'>Negative</span>" +
+              "</div>" +
+              "<div class='cm-cell cm-cell--fn cm-cell-slot-fn'>" +
+                "<span class='cm-cell-label'>FN</span><span class='cm-cell-value'>" + counts.fn + "</span>" +
+              "</div>" +
+              "<div class='cm-cell cm-cell--tn cm-cell-slot-tn'>" +
+                "<span class='cm-cell-label'>TN</span><span class='cm-cell-value'>" + counts.tn + "</span>" +
+              "</div>" +
+            "</div>" +
+            "<div class='cm-legend'>" +
+              "<p class='cm-legend-line'><code>TP</code> — " +
+                escapeHtml("True Positives: relevant results correctly retrieved") +
+              "</p>" +
+              "<p class='cm-legend-line'><code>FP</code> — " +
+                escapeHtml("False Positives: non-relevant results retrieved") +
+              "</p>" +
+              "<p class='cm-legend-line'><code>FN</code> — " +
+                escapeHtml("False Negatives: relevant results missed by retrieval") +
+              "</p>" +
+              "<p class='cm-legend-line'><code>TN</code> — " +
+                escapeHtml("True Negatives: non-relevant results correctly not retrieved") +
+              "</p>" +
+            "</div>" +
+          "</div>"
+        );
+      }
+
+      function renderStats(allRuns, filteredRuns) {
+        if (allRuns.length === 0) {
+          avgPrecisionValue.textContent = "0.00";
+          avgRecallValue.textContent = "0.00";
+          avgMrrValue.textContent = "0.00";
+          filteredMrrValue.textContent = "0.00";
+          bestRunValue.textContent = "-";
+          worstRunValue.textContent = "-";
+          mrrValue.textContent = "0.00";
+          mrrMeta.textContent = "По всем run: 0.00";
+          clearMrrChartSurface();
+          return;
+        }
+
+        var totals = filteredRuns.reduce(function (acc, run) {
+          acc.p += Number(run.metrics.precision) || 0;
+          acc.r += Number(run.metrics.recall) || 0;
+          return acc;
+        }, { p: 0, r: 0 });
+
+        var allMrr = computeMrrFromRuns(allRuns);
+        var filteredMrr = computeMrrFromRuns(filteredRuns);
+        var hasFilter = hasActiveFilters();
+
+        if (filteredRuns.length > 0) {
+          var best = filteredRuns.reduce(function (maxRun, run) {
+            return getRunRr(run) > getRunRr(maxRun) ? run : maxRun;
+          }, filteredRuns[0]);
+          var worst = filteredRuns.reduce(function (minRun, run) {
+            return getRunRr(run) < getRunRr(minRun) ? run : minRun;
+          }, filteredRuns[0]);
+          bestRunValue.textContent = best.date + " (RR: " + round2(getRunRr(best)) + ")";
+          worstRunValue.textContent = worst.date + " (RR: " + round2(getRunRr(worst)) + ")";
+        } else {
+          bestRunValue.textContent = "-";
+          worstRunValue.textContent = "-";
+        }
+
+        avgPrecisionValue.textContent = filteredRuns.length > 0 ? round2(totals.p / filteredRuns.length) : "0.00";
+        avgRecallValue.textContent = filteredRuns.length > 0 ? round2(totals.r / filteredRuns.length) : "0.00";
+        avgMrrValue.textContent = round2(allMrr);
+        filteredMrrValue.textContent = hasFilter && filteredRuns.length === 0 ? "—" : round2(filteredMrr);
+        mrrValue.textContent = round2(allMrr);
+        mrrMeta.textContent = "По всем run: " + round2(allMrr) + " | По фильтру: " + (hasFilter && filteredRuns.length === 0 ? "—" : round2(filteredMrr));
+        renderMrrChart(filteredRuns);
+      }
+
+      function renderHistory() {
+        var runs = readRuns();
+        var filteredRuns = filterRuns(runs);
+        if (filteredRuns.length === 0) {
+          historyList.innerHTML = runs.length === 0
+            ? "<p class='history-empty'>История пока пуста.</p>"
+            : "<p class='history-empty'>Нет записей по выбранному фильтру.</p>";
+          renderStats(runs, filteredRuns);
+          return;
+        }
+
+        historyList.innerHTML = filteredRuns.map(function (run) {
+          var sourceIndex = runs.indexOf(run);
+          var context = run.context || {};
+          var metrics = run.metrics || {};
+          return (
+            "<div class='history-item'>" +
+              "<div class='history-top'>" +
+                "<p class='history-date'>" + run.date + "</p>" +
+                "<button class='delete-entry-btn' data-index='" + sourceIndex + "' type='button'>Удалить запись</button>" +
+              "</div>" +
+              "<p class='history-metrics'>Model: " + (context.model || "—") + " · Prompt: " + (context.promptName || "—") + "</p>" +
+              "<div class='history-grid'>" +
+                "<div class='history-cell'>Accuracy<strong>" + round2(metrics.accuracy || 0) + "</strong></div>" +
+                "<div class='history-cell'>Precision<strong>" + round2(metrics.precision || 0) + "</strong></div>" +
+                "<div class='history-cell'>Recall<strong>" + round2(metrics.recall || 0) + "</strong></div>" +
+                "<div class='history-cell'>F1<strong>" + round2(metrics.f1 || 0) + "</strong></div>" +
+                "<div class='history-cell'>RR<strong>" + round2(metrics.rr || 0) + "</strong></div>" +
+              "</div>" +
+              "<div class='history-cm-wrap'>" +
+                "<button type='button' class='cm-toggle-btn' aria-expanded='false'>Показать Confusion Matrix</button>" +
+                "<div class='history-cm-panel' data-run-index='" + sourceIndex + "'></div>" +
+              "</div>" +
+            "</div>"
+          );
+        }).join("");
+        renderStats(runs, filteredRuns);
+      }
+
+      function lazyRenderConfusionMatrix(panelEl) {
+        if (!panelEl) return;
+        if (panelEl.getAttribute("data-rendered") === "1") return;
+        var sourceIndex = Number(panelEl.getAttribute("data-run-index"));
+        if (!Number.isInteger(sourceIndex) || sourceIndex < 0) return;
+        var runs = readRuns();
+        var run = runs[sourceIndex];
+        if (!run) return;
+        var cmCounts = getRunConfusionCounts(run);
+        panelEl.innerHTML = buildConfusionMatrixHtml(cmCounts);
+        panelEl.setAttribute("data-rendered", "1");
+      }
+
+      function saveRun() {
+        var current = window.metricsData;
+        if (!current || !current.input || !current.metrics) return;
+        var runs = readRuns();
+
+        runs.unshift({
+          id: Date.now(),
+          date: formatDate(new Date()),
+          context: {
+            model: String(modelInput.value || "").trim(),
+            promptName: String(promptNameInput.value || "").trim(),
+            notes: ""
+          },
+          input: {
+            tp: current.input.tp,
+            fp: current.input.fp,
+            fn: current.input.fn,
+            tn: current.input.tn,
+            rank: current.input.rank,
+            total:
+              current.input.tp +
+              current.input.tn +
+              current.input.fp +
+              current.input.fn
+          },
+          metrics: {
+            precision: current.metrics.precision,
+            recall: current.metrics.recall,
+            f1: current.metrics.f1,
+            accuracy: current.metrics.accuracy,
+            rr: current.metrics.rr
+          }
+        });
+
+        if (runs.length > RUNS_LIMIT) {
+          runs = runs.slice(0, RUNS_LIMIT);
+        }
+
+        writeRuns(runs);
+        renderHistory();
+      }
+
+      function applyTheme(theme) {
+        var isDark = theme === "dark";
+        document.body.classList.toggle("dark-theme", isDark);
+        themeToggleBtn.setAttribute("title", isDark ? "Светлая тема" : "Темная тема");
+        themeToggleBtn.setAttribute("aria-label", isDark ? "Включить светлую тему" : "Включить темную тему");
+      }
+
+      function initTheme() {
+        var savedTheme = localStorage.getItem(THEME_KEY);
+        if (savedTheme === "dark" || savedTheme === "light") {
+          applyTheme(savedTheme);
+          return;
+        }
+        var prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        applyTheme(prefersDark ? "dark" : "light");
+      }
+
+      function setHistoryPanelVisible(show, persist) {
+        if (!historyPanelBody || !historyVisibleToggle) return;
+        historyPanelBody.classList.toggle("is-hidden", !show);
+        historyVisibleToggle.checked = show;
+        if (persist) {
+          localStorage.setItem(HISTORY_PANEL_VISIBLE_KEY, show ? "1" : "0");
+        }
+      }
+
+      function initHistoryPanelVisibility() {
+        var saved = localStorage.getItem(HISTORY_PANEL_VISIBLE_KEY);
+        var visible = saved === null ? true : saved === "1";
+        setHistoryPanelVisible(visible, false);
+      }
+
+      function clearAll() {
+        tpInput.value = "0";
+        fpInput.value = "0";
+        fnInput.value = "0";
+        tnInput.value = "0";
+        kInput.value = "0";
+        rankInput.value = "0";
+        modelInput.value = "";
+        promptNameInput.value = "";
+        errorEl.textContent = "";
+        calculate();
+      }
+
+      document.querySelectorAll(".spin-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var targetId = btn.getAttribute("data-target");
+          var input = document.getElementById(targetId);
+          if (!input) return;
+          if (btn.classList.contains("spin-up")) {
+            input.stepUp();
+          } else {
+            input.stepDown();
+          }
+          input.dispatchEvent(new Event("input", { bubbles: true }));
+        });
+      });
+
+      [tpInput, fpInput, fnInput, tnInput, kInput, rankInput].forEach(function (el) {
+        el.addEventListener("input", calculate);
+      });
+      calculateBtn.addEventListener("click", function () {
+        calculate();
+        saveRun();
+      });
+      clearBtn.addEventListener("click", clearAll);
+      randomInputBtn.addEventListener("click", randomizeInputs);
+      historyVisibleToggle.addEventListener("change", function () {
+        setHistoryPanelVisible(historyVisibleToggle.checked, true);
+      });
+      themeToggleBtn.addEventListener("click", function () {
+        var nextTheme = document.body.classList.contains("dark-theme") ? "light" : "dark";
+        localStorage.setItem(THEME_KEY, nextTheme);
+        applyTheme(nextTheme);
+        redrawFilteredChart();
+      });
+      clearHistoryBtn.addEventListener("click", function () {
+        writeRuns([]);
+        renderHistory();
+      });
+      historyList.addEventListener("click", function (event) {
+        var target = event.target;
+        var toggleBtn = target.closest && target.closest(".cm-toggle-btn");
+        if (toggleBtn) {
+          event.preventDefault();
+          var wrap = toggleBtn.closest(".history-cm-wrap");
+          if (!wrap) return;
+          var open = !wrap.classList.contains("is-open");
+          wrap.classList.toggle("is-open", open);
+          toggleBtn.setAttribute("aria-expanded", open ? "true" : "false");
+          toggleBtn.textContent = open
+            ? "Скрыть Confusion Matrix"
+            : "Показать Confusion Matrix";
+          if (open) {
+            lazyRenderConfusionMatrix(wrap.querySelector(".history-cm-panel"));
+          }
+          return;
+        }
+
+        var delBtn = target.closest && target.closest(".delete-entry-btn");
+        if (!delBtn) return;
+        var index = Number(delBtn.getAttribute("data-index"));
+        if (!Number.isInteger(index) || index < 0) return;
+        var runs = readRuns();
+        runs.splice(index, 1);
+        writeRuns(runs);
+        renderHistory();
+      });
+      var debouncedRenderHistory = debounce(renderHistory, 120);
+      var debouncedRedrawFilteredChart = debounce(redrawFilteredChart, 90);
+
+      historySearchInput.addEventListener("input", debouncedRenderHistory);
+      historyModelFilterInput.addEventListener("input", debouncedRenderHistory);
+      quickMrrRanksInput.addEventListener("input", calculateQuickMrr);
+
+      [chartOptGrid, chartOptAvgLine, chartOptPoints, chartOptTooltip].forEach(function (el) {
+        if (!el) return;
+        el.addEventListener("change", debouncedRedrawFilteredChart);
+      });
+
+      if (chartLegend) {
+        chartLegend.addEventListener("change", function (evt) {
+          var t = evt.target;
+          if (!t.classList || !t.classList.contains("chart-model-cb")) return;
+          var raw = decodeURIComponent(t.getAttribute("data-model") || "");
+          var key = normalizeModelName(raw);
+          if (t.checked) delete chartHiddenModels[key];
+          else chartHiddenModels[key] = true;
+          debouncedRedrawFilteredChart();
+        });
+      }
+
+      if (mrrChart && chartCanvasShell) {
+        mrrChart.addEventListener("mousemove", function (ev) {
+            pendingChartMouseEvent = ev;
+            if (chartMouseRaf) return;
+            chartMouseRaf = window.requestAnimationFrame(function () {
+              chartMouseRaf = 0;
+              var moveEvt = pendingChartMouseEvent;
+              pendingChartMouseEvent = null;
+              if (!moveEvt) return;
+            var cfg = readChartOpts();
+            if (!cfg.tooltip) {
+              hideChartTooltip();
+              return;
+            }
+            if (!chartHitPoints.length) {
+              hideChartTooltip();
+              return;
+            }
+            var p = canvasPointerNormalized(moveEvt);
+            var b = mrrChart.getBoundingClientRect();
+            var scalePx = mrrChart.width / Math.max(b.width, 1);
+            var thresh = 14 * scalePx;
+            var threshSq = thresh * thresh;
+            var best = null;
+            var bestD = threshSq + 1;
+            for (var hi = 0; hi < chartHitPoints.length; hi += 1) {
+              var hpt = chartHitPoints[hi];
+              var dx = p.mx - hpt.x;
+              var dy = p.my - hpt.y;
+              var d2 = dx * dx + dy * dy;
+              if (d2 < bestD) {
+                bestD = d2;
+                best = hpt;
+              }
+            }
+            if (!best || bestD > threshSq) {
+              hideChartTooltip();
+              return;
+            }
+            showChartTooltip(best, moveEvt, cfg);
+            });
+          }, false);
+        mrrChart.addEventListener("mouseleave", hideChartTooltip, false);
+      }
+
+      initTheme();
+      calculate();
+      calculateQuickMrr();
+      initHistoryPanelVisibility();
+      renderHistory();
+      window.addEventListener("resize", debouncedRedrawFilteredChart);
+      }
+
+      if (document.readyState === "loading") {
+        window.addEventListener("DOMContentLoaded", initApp, { once: true });
+      } else {
+        initApp();
+      }
+    })();
+  </script>
+</body>
+</html>
